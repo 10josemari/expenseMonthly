@@ -19,7 +19,6 @@ class CreateRolesTable extends Migration
             $table->string('code');
             $table->dateTime('created_at', 0);
             $table->dateTime('updated_at', 0);
-            $table->dateTime('deleted_at', 0)->nullable();
         });
 
         // Añadimos roles

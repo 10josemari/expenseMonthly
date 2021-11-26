@@ -37,8 +37,8 @@
     <!-- menu superior --> 
     <div class="row">
         <div class="col-12">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark marginSideNavbar">
-                <a class="navbar-brand" href="{{ route('home') }}">Bienvenido {{auth()->user()->username}}</a>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light marginSideNavbar">
+                <a class="navbar-brand" href="{{ route('home') }}">Gastos mensuales</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
                 </button>
@@ -46,7 +46,7 @@
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item {{ setActive('home') }}"><a class="nav-link" href="{{ route('home') }}"><i class="fas fa-home"></i> Home</a></li>
                         <li class="nav-item dropdown">
-                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-plus"></i> Dropdown</a>
+                          <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-plus"></i> Secciones</a>
                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item {{ setActive('category') }}" href="{{ route('category') }}"><i class="fab fa-cuttlefish"></i> Categorías</a>
                             <a class="dropdown-item" href="#">Another action</a>
@@ -55,10 +55,20 @@
                           </div>
                         </li>
                     </ul>
-                    <form class="form-inline my-2 my-lg-0" action="/logout" method="POST">
-                      @csrf
-                      <button type="submit" class="btn btn-default"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</button>
-                    </form>
+                    <ul class="navbar-nav ml-auto">
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">{{auth()->user()->username}}</a>
+                          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item {{ setActive('config') }}" href="{{ route('config') }}"><i class="fas fa-cog"></i> Configuración</a>
+                            <div class="dropdown-divider"></div>
+                            <form class="form-inline my-2 my-lg-0 marginLeft" action="/logout" method="POST">
+                              @csrf
+                              <button type="submit" class="btn btn-default"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</button>
+                            </form>
+                          </div>
+                        </li>
+                      <li>
+                    </ul>
                 </div>
             </nav>                
         </div>

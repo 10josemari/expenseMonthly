@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 use App\Models\Category;
+use Carbon\Carbon;
 
 class CategoryController extends Controller
 {
@@ -14,7 +14,7 @@ class CategoryController extends Controller
      */
     public function index(){
         /** Recogemos si ya tenemos categorías insertadas */
-        $categories = Category::select('*')->where('deleted_at','=',NULL)->paginate(10);
+        $categories = Category::select('*')->paginate(10);
         return view('category.category', compact('categories'));
     }
 
@@ -37,7 +37,6 @@ class CategoryController extends Controller
 
         request()->session()->regenerateToken();
         return redirect()->route('category');
-        //return redirect()->route('addComments',['id' => $id]);
     }
 
     /**
@@ -59,7 +58,7 @@ class CategoryController extends Controller
      * Eliminamos una categoría
      */
     public function deleteCategory(Request $request){
-        Category::find($request->id)->update(['deleted_at' => Carbon::now()]);
+        Category::find($request->id)->delete();
         return response()->json(['success'=>'done']);
     }
 }

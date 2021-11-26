@@ -12,6 +12,14 @@
     margin-top: 1em;
 }
 
+.marginLeft{
+    margin-left: 1em;
+}
+
+.marginRight{
+    margin-right: 1em;
+}
+
 .marginSide{
     margin-left: 2em;
     margin-right: 2em;
@@ -33,6 +41,10 @@
 
 .floatRight{
     float: right;
+}
+
+.iconInherit{
+    line-height: inherit;
 }
 
 .red{

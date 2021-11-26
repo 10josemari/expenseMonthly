@@ -17,11 +17,29 @@ class CreateConfigTable extends Migration
         Schema::create('config', function (Blueprint $table) {
             $table->id('id');
             $table->string('option');
-            $table->string('value');
+            $table->decimal('value', 10, 2);
             $table->dateTime('created_at', 0);
             $table->dateTime('updated_at', 0);
-            $table->dateTime('deleted_at', 0)->nullable();
         });
+
+        DB::table('config')->insert(
+            array(
+                'option' => 'importe inicial',
+                'value' => '0.00',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            )
+        );
+
+        DB::table('config')->insert(
+            array(
+                'option' => 'ahorro mensual',
+                'value' => '0.00',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            )
+        );
+        
     }
 
     /**

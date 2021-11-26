@@ -45,3 +45,18 @@ $(".fa-compress-arrows-alt-cat").on('click', function(e) {
     $(".fa-compress-arrows-alt-cat").css('display','none');
     $(".fa-compress-cat").css('display','block');
 });
+
+/**
+ * Vista Cofiguración
+ */
+ $(".showSavings").on('click', function(e) {
+    $('.cardBodyConfig').css('display','block');
+    $(".hideSavings").css('display','block');
+    $(".showSavings").css('display','none');
+});
+
+$(".hideSavings").on('click', function(e) {
+    $('.cardBodyConfig').css('display','none');
+    $(".showSavings").css('display','block');
+    $(".hideSavings").css('display','none');
+});

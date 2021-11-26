@@ -37,3 +37,15 @@ Route::get('/category', [App\Http\Controllers\CategoryController::class, 'index'
 Route::post('/addCategory', [App\Http\Controllers\CategoryController::class, 'addCategory'])->name('addCategory');
 Route::post('/updateCategory', [App\Http\Controllers\CategoryController::class, 'updateCategory'])->name('updateCategory');
 Route::post('/deleteCategory', [App\Http\Controllers\CategoryController::class, 'deleteCategory'])->name('deleteCategory');
+
+/*
+|--------------------------------------------------------------------------
+| Config
+|--------------------------------------------------------------------------
+|
+|
+*/
+Route::get('/config', [App\Http\Controllers\ConfigController::class, 'index'])->name('config')->middleware('auth');
+Route::post('/updateConfig', [App\Http\Controllers\ConfigController::class, 'updateConfig'])->name('updateConfig');
+Route::post('/updateSaving', [App\Http\Controllers\ConfigController::class, 'updateSaving'])->name('updateSaving');
+Route::post('/deleteSaving', [App\Http\Controllers\ConfigController::class, 'deleteSaving'])->name('deleteSaving');

@@ -71,7 +71,7 @@
 </div>
 <!-- listado que muestra las categorías creadas -->
 
-<!-- Js para editable --> 
+<!-- Js --> 
 <script type="text/javascript">
 $(document).ready(function(){
     $.ajaxSetup({
@@ -107,9 +107,7 @@ $(document).ready(function(){
         size: 'small'
     }).on('confirm', function(e){
         var id =  $(this).data('id');
-        console.log(id);
         var send = $('.delCategory').attr('action');
-        console.log(send);
         $.ajax({
             type:'POST',
             url:send,
@@ -124,5 +122,5 @@ $(document).ready(function(){
     });
 });
 </script>
-<!-- Js para editable --> 
+<!-- Js --> 
 @endsection
