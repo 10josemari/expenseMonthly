@@ -10019,3 +10019,29 @@ h3 {
     border-color: #dee2e6;
   }
 }
+.marginTop {
+  margin-top: 1em;
+}
+
+.marginSide {
+  margin-left: 2em;
+  margin-right: 2em;
+}
+
+.marginSideNavbar {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.textCenter {
+  text-align: center;
+  font-weight: bold;
+}
+
+.floatLeft {
+  float: left;
+}
+
+.floatRight {
+  float: right;
+}

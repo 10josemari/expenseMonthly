@@ -6,3 +6,31 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+// CSS que se usara en todos los archivos
+.marginTop{
+    margin-top: 1em;
+}
+
+.marginSide{
+    margin-left: 2em;
+    margin-right: 2em;
+}
+
+.marginSideNavbar{
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.textCenter{
+    text-align: center;
+    font-weight: bold;
+}
+
+.floatLeft{
+    float: left;
+}
+
+.floatRight{
+    float: right;
+}

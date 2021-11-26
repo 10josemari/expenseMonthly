@@ -30,3 +30,18 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app',
 });
+
+/**
+ * Vista Categoría
+ */
+ $(".fa-compress-cat").on('click', function(e) {
+    $('.cardBodyCategory').css('display','block');
+    $(".fa-compress-arrows-alt-cat").css('display','block');
+    $(".fa-compress-cat").css('display','none');
+});
+
+$(".fa-compress-arrows-alt-cat").on('click', function(e) {
+    $('.cardBodyCategory').css('display','none');
+    $(".fa-compress-arrows-alt-cat").css('display','none');
+    $(".fa-compress-cat").css('display','block');
+});

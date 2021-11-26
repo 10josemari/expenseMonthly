@@ -1,6 +1,8 @@
-<form action="/logout" method="POST">
-  @csrf
-  <button type="submit" class="btn btn-default"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</button>
-</form>
+@extends('layouts.layout')
+
+@section('title','Página principal')
+
+@section('body')
 <h1>Welcome back to Home</h1>
 {{auth()->user()}}
+@endsection

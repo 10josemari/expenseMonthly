@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +19,20 @@ Route::post('/logout', [App\Http\Controllers\LoginController::class, 'logout'])-
 
 /*
 |--------------------------------------------------------------------------
-| Login
+| Home
 |--------------------------------------------------------------------------
 |
 |
 */
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+
+/*
+|--------------------------------------------------------------------------
+| Category
+|--------------------------------------------------------------------------
+|
+|
+*/
+Route::get('/category', [App\Http\Controllers\CategoryController::class, 'index'])->name('category')->middleware('auth');
+Route::post('/addCategory', [App\Http\Controllers\CategoryController::class, 'addCategory'])->name('addCategory');
+Route::post('/updateCategory', [App\Http\Controllers\CategoryController::class, 'updateCategory'])->name('updateCategory');
