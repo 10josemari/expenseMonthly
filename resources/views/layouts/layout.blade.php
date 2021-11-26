@@ -22,10 +22,16 @@
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="{{ url('css/app.css') }}">
 
+    <!-- jQuery --> 
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script> 
+
     <!-- Bootstrap editable -->
     <link rel="stylesheet" type="text/css" href="{{ url('css/bootstrap-editable.css') }}">
     <script src="{{ asset('js/bootstrap-editable.js') }}" defer></script>
-    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script> 
+
+    <!--jConfirm --> 
+    <link rel="stylesheet" type="text/css" href="{{ url('css/jConfirm.min.css') }}">
+    <script src="{{ asset('js/jConfirm.min.js') }}" defer></script>
 </head>
 <body>
     <!-- menu superior --> 

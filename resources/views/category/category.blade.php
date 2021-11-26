@@ -50,7 +50,12 @@
             <tr>
                 <td><a href="" class="updateCat" data-name="name" data-type="text" data-pk="{{$category->id}}" data-title="Edita el nombre">{{ $category->name }}</a></td>
                 <td><a href="" class="updateCat" data-name="description" data-type="text" data-pk="{{$category->id}}" data-title="Edita la descripción">{{ $category->description }}</a></td>
-                <td><i class="fas fa-trash red"></i></td>
+                <td>
+                    <form class="delCategory" action="/deleteCategory" method="POST">
+                        @csrf
+                        <a href="" data-toggle="deleteCategory" data-question="¿Quieres eliminar este registro?" data-id="{{ $category->id }}"><i class="fas fa-trash red"></i></a>
+                    </form>
+                </td>
             </tr>
             @endforeach
         @else
@@ -75,12 +80,47 @@ $(document).ready(function(){
         }
     });
 
+    // Actualizamos campos de categorías
     $('.updateCat').editable({
         url: '/updateCategory',
         type: 'text',
         pk: 1,
         name: 'name',
         title: 'Enter name'
+    });
+
+    // Confirmamos si queremos eliminar categorías
+    $('[data-toggle="deleteCategory"]').jConfirm({
+        //string: confirm button text
+        confirm_text: 'Si',
+        //string: deny button text
+        deny_text: 'No',
+        //string ('auto','top','bottom','left','right'): prefer#78261f location of the tooltip (defaults to auto if no space)
+        position: 'left',
+        //string: class(es) to add to the tooltip
+        class: '',
+        //boolean: if true, the deny button will be shown
+        show_deny_btn: true,
+        //string ('black', 'white', 'bootstrap-4', 'bootstrap-4-white')
+        theme: 'bootstrap-4-white',
+        //string ('tiny', 'small', 'medium', 'large')
+        size: 'small'
+    }).on('confirm', function(e){
+        var id =  $(this).data('id');
+        console.log(id);
+        var send = $('.delCategory').attr('action');
+        console.log(send);
+        $.ajax({
+            type:'POST',
+            url:send,
+            data:{id: id}
+        }).done(function(data){
+            if(data['success'] == "done"){
+                location.reload()
+            }
+        }).fail(function(err){
+            console.log(err);   
+        });
     });
 });
 </script>

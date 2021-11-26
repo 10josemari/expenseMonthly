@@ -19,7 +19,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * 
+     * Añadimos una categoría y retornamos a la vista de categorías
      */
     public function addCategory(){
         request()->validate([
@@ -55,4 +55,11 @@ class CategoryController extends Controller
         return response()->json(['success'=>'done']);
     }
 
+    /**
+     * Eliminamos una categoría
+     */
+    public function deleteCategory(Request $request){
+        Category::find($request->id)->update(['deleted_at' => Carbon::now()]);
+        return response()->json(['success'=>'done']);
+    }
 }

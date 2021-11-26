@@ -10045,3 +10045,17 @@ h3 {
 .floatRight {
   float: right;
 }
+
+.red {
+  color: #721c24;
+}
+
+.btn-secondary {
+  background-color: #721c24 !important;
+  border-color: #721c24 !important;
+}
+
+.btn-secondary:hover, .btn-secondary:focus {
+  background-color: #8b323b !important;
+  border-color: #8b323b !important;
+}
