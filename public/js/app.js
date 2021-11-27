@@ -2165,6 +2165,34 @@ $(".fa-compress-arrows-alt-sal").on('click', function (e) {
   $(".fa-compress-arrows-alt-sal").css('display', 'none');
   $(".fa-compress-sal").css('display', 'block');
 });
+/**
+ * Vista Home
+ */
+
+$(".fa-compress-home").on('click', function (e) {
+  $('.carBodyHome').css('display', 'block');
+  $(".fa-compress-arrows-alt-home").css('display', 'block');
+  $(".fa-compress-home").css('display', 'none');
+});
+$(".fa-compress-arrows-alt-home").on('click', function (e) {
+  $('.carBodyHome').css('display', 'none');
+  $(".fa-compress-arrows-alt-home").css('display', 'none');
+  $(".fa-compress-home").css('display', 'block');
+});
+/**
+ * Vista Income
+ */
+
+$(".fa-compress-income").on('click', function (e) {
+  $('.cardBodyIncome').css('display', 'block');
+  $(".fa-compress-arrows-alt-income").css('display', 'block');
+  $(".fa-compress-income").css('display', 'none');
+});
+$(".fa-compress-arrows-alt-income").on('click', function (e) {
+  $('.cardBodyIncome').css('display', 'none');
+  $(".fa-compress-arrows-alt-income").css('display', 'none');
+  $(".fa-compress-income").css('display', 'block');
+});
 
 /***/ }),
 

@@ -50,7 +50,7 @@
                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item {{ setActive('salary') }}" href="{{ route('salary') }}"><i class="fas fa-euro-sign"></i> Salarios</a>
                             <a class="dropdown-item {{ setActive('category') }}" href="{{ route('category') }}"><i class="fab fa-cuttlefish"></i> Categorías</a>
-                            <a class="dropdown-item {{ setActive('category') }}" href="{{ route('category') }}"><i class="fas fa-comment-dollar"></i> Transferencias/Ingresos</a>
+                            <a class="dropdown-item {{ setActive('income') }}" href="{{ route('income') }}"><i class="fas fa-comment-dollar"></i> Transferencias/Ingresos</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item {{ setActive('category') }}" href="{{ route('category') }}"><i class="fas fa-coins"></i> Gastos mensuales</a>
                           </div>
@@ -62,6 +62,7 @@
                           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">{{auth()->user()->username}}</a>
                           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item {{ setActive('config') }}" href="{{ route('config') }}"><i class="fas fa-cog"></i> Configuración</a>
+                            <a class="dropdown-item {{ setActive('config') }}" href="{{ route('config') }}"><i class="fas fa-piggy-bank"></i> Hucha</a>
                             <div class="dropdown-divider"></div>
                             <form class="form-inline my-2 my-lg-0 marginLeft" action="/logout" method="POST">
                               @csrf

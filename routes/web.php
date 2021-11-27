@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\FinancialActivityController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\LoginController;
@@ -63,3 +65,21 @@ Route::get('/salary', [App\Http\Controllers\SalaryController::class, 'index'])->
 Route::post('/addSalary', [App\Http\Controllers\SalaryController::class, 'addSalary'])->name('addSalary');
 Route::post('/updateSalary', [App\Http\Controllers\SalaryController::class, 'updateSalary'])->name('updateSalary');
 Route::post('/deleteSalary', [App\Http\Controllers\SalaryController::class, 'deleteSalary'])->name('deleteSalary');
+
+/*
+|--------------------------------------------------------------------------
+| Income
+|--------------------------------------------------------------------------
+|
+|
+*/
+Route::get('/income', [App\Http\Controllers\FinancialActivityController::class, 'indexIncome'])->name('income');
+Route::post('/addIncome', [App\Http\Controllers\FinancialActivityController::class, 'addIncome'])->name('addIncome');
+
+/*
+|--------------------------------------------------------------------------
+| Salary
+|--------------------------------------------------------------------------
+|
+|
+*/

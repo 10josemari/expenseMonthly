@@ -13,7 +13,6 @@
             </div>
     </div>
     <div class="card-body cardBodySalary">
-
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
           <strong>Atención!</strong> No se podrán añadir más de 2 salarios al mes.
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">

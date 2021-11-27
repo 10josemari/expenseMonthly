@@ -19,7 +19,7 @@ class ConfigController extends Controller
          * Comprobamos ademas si tiene registro en monthlySavings
          */
         $configs = Config::select('*')->get();
-        $monthlySavings = MonthlySavings::select('*')->get();
+        $monthlySavings = MonthlySavings::select('*')->orderBy('id', 'desc')->get();
         return view('config.config', compact('configs','monthlySavings'));
     }
 

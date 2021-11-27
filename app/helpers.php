@@ -12,31 +12,31 @@ function setActive($routeName){
  */
 function getMonth($month){
     switch ($month) {
-        case '1':
+        case '01':
             return 'Enero';
         break;
-        case '2':
+        case '02':
             return 'Febrero';
         break;
-        case '3':
+        case '03':
             return 'Marzo';
         break;
-        case '4':
+        case '04':
             return 'Abril';
         break;
-        case '5':
+        case '05':
             return 'Mayo';
         break;
-        case '6':
+        case '06':
             return 'Junio';
         break;
-        case '7':
+        case '07':
             return 'Julio';
         break;
-        case '8':
+        case '08':
             return 'Agosto';
         break;
-        case '9':
+        case '09':
             return 'Septiembre';
         break;
         case '10':
@@ -56,31 +56,31 @@ function getMonth($month){
  */
 function getNextMonth($month){
     switch ($month) {
-        case '1':
+        case '01':
             return getMonth($month+1)." - ".date('Y');
         break;
-        case '2':
+        case '02':
             return getMonth($month+1)." - ".date('Y');
         break;
-        case '3':
+        case '03':
             return getMonth($month+1)." - ".date('Y');
         break;
-        case '4':
+        case '04':
             return getMonth($month+1)." - ".date('Y');
         break;
-        case '5':
+        case '05':
             return getMonth($month+1)." - ".date('Y');
         break;
-        case '6':
+        case '06':
             return getMonth($month+1)." - ".date('Y');
         break;
-        case '7':
+        case '07':
             return getMonth($month+1)." - ".date('Y');
         break;
-        case '8':
+        case '08':
             return getMonth($month+1)." - ".date('Y');
         break;
-        case '9':
+        case '09':
             return getMonth($month+1)." - ".date('Y');
         break;
         case '10':
@@ -93,6 +93,52 @@ function getNextMonth($month){
             $month = 1;
             $year = date('Y')+1;
             return getMonth($month)." - ".$year;
+        break;
+    }
+}
+
+/**
+ * 
+ */
+function getRestMonth($month){
+    switch ($month) {
+        case '01':
+            $month = 12;
+            $year = date('Y')-1;
+            return $month."-".$year;
+        break;
+        case '02':
+            return ($month-1)."-".date('Y');
+        break;
+        case '03':
+            return ($month-1)."-".date('Y');
+        break;
+        case '04':
+            return ($month-1)."-".date('Y');
+        break;
+        case '05':
+            return ($month-1)."-".date('Y');
+        break;
+        case '06':
+            return ($month-1)."-".date('Y');
+        break;
+        case '07':
+            return ($month-1)."-".date('Y');
+        break;
+        case '08':
+            return ($month-1)."-".date('Y');
+        break;
+        case '09':
+            return ($month-1)."-".date('Y');
+        break;
+        case '10':
+            return ($month-1)."-".date('Y');
+        break;
+        case '11':
+            return ($month-1)."-".date('Y');
+        break;
+        case '12':
+            return ($month-1)."-".date('Y');
         break;
     }
 }
