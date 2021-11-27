@@ -50,11 +50,12 @@
                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item {{ setActive('salary') }}" href="{{ route('salary') }}"><i class="fas fa-euro-sign"></i> Salarios</a>
                             <a class="dropdown-item {{ setActive('category') }}" href="{{ route('category') }}"><i class="fab fa-cuttlefish"></i> Categorías</a>
-                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item {{ setActive('category') }}" href="{{ route('category') }}"><i class="fas fa-comment-dollar"></i> Transferencias/Ingresos</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
+                            <a class="dropdown-item {{ setActive('category') }}" href="{{ route('category') }}"><i class="fas fa-coins"></i> Gastos mensuales</a>
                           </div>
                         </li>
+                        <li class="nav-item {{ setActive('category') }}"><a class="nav-link" href="{{ route('category') }}"><i class="fas fa-book"></i></i> Historial de gastos</a></li>
                     </ul>
                     <ul class="navbar-nav ml-auto">
                       <li class="nav-item dropdown">
