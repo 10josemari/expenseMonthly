@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
 
@@ -50,3 +51,15 @@ Route::get('/config', [App\Http\Controllers\ConfigController::class, 'index'])->
 Route::post('/updateConfig', [App\Http\Controllers\ConfigController::class, 'updateConfig'])->name('updateConfig');
 Route::post('/updateSaving', [App\Http\Controllers\ConfigController::class, 'updateSaving'])->name('updateSaving');
 Route::post('/deleteSaving', [App\Http\Controllers\ConfigController::class, 'deleteSaving'])->name('deleteSaving');
+
+/*
+|--------------------------------------------------------------------------
+| Salary
+|--------------------------------------------------------------------------
+|
+|
+*/
+Route::get('/salary', [App\Http\Controllers\SalaryController::class, 'index'])->name('salary')->middleware('auth');
+Route::post('/addSalary', [App\Http\Controllers\SalaryController::class, 'addSalary'])->name('addSalary');
+Route::post('/updateSalary', [App\Http\Controllers\SalaryController::class, 'updateSalary'])->name('updateSalary');
+Route::post('/deleteSalary', [App\Http\Controllers\SalaryController::class, 'deleteSalary'])->name('deleteSalary');

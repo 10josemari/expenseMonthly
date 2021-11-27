@@ -195,5 +195,5 @@ $(document).ready(function(){
     });
 });
 </script>
-<!-- Js --> 
+<!-- Js -->
 @endsection

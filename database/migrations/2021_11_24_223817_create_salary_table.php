@@ -15,16 +15,12 @@ class CreateSalaryTable extends Migration
     {
         Schema::create('salary', function (Blueprint $table) {
             $table->id('id');
-            $table->string('action');
+            $table->string('name');
             $table->decimal('money', 10, 2);
-            $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('config_id');
+            $table->string('month');
+            $table->string('year');
             $table->dateTime('created_at', 0);
             $table->dateTime('updated_at', 0);
-            $table->foreign('category_id')->references('id')->on('category')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('config_id')->references('id')->on('config')->onDelete('cascade');
         });
     }
 

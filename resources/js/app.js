@@ -60,3 +60,18 @@ $(".hideSavings").on('click', function(e) {
     $(".showSavings").css('display','block');
     $(".hideSavings").css('display','none');
 });
+
+/**
+ * Vista Salario
+ */
+ $(".fa-compress-sal").on('click', function(e) {
+    $('.cardBodySalary').css('display','block');
+    $(".fa-compress-arrows-alt-sal").css('display','block');
+    $(".fa-compress-sal").css('display','none');
+});
+
+$(".fa-compress-arrows-alt-sal").on('click', function(e) {
+    $('.cardBodySalary').css('display','none');
+    $(".fa-compress-arrows-alt-sal").css('display','none');
+    $(".fa-compress-sal").css('display','block');
+});

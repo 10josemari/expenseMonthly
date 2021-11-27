@@ -4,7 +4,7 @@
 
 @section('body')
 <!-- Configuración por defecto -->
-<div class="marginSide">
+<div class="marginSide marginTop">
     <table class="table">
         <thead>
           <tr>
@@ -77,65 +77,65 @@
 @endif
 <!-- panel para ahorro mensual -->
 
-    <!-- Js --> 
-    <script type="text/javascript">
-    $(document).ready(function(){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+<!-- Js --> 
+<script type="text/javascript">
+$(document).ready(function(){
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    // Actualizamos campos ahorro mensual fijo
+    $('.updateCon').editable({
+        url: '/updateConfig',
+        type: 'text',
+        pk: 1,
+        name: 'name',
+        title: 'Enter name'
+    });
+
+    // Actualizamos campo de ahorro mensual por mes
+    $('.updateSav').editable({
+        url: '/updateSaving',
+        type: 'text',
+        pk: 1,
+        name: 'name',
+        title: 'Enter name'
+    });
+
+    // Confirmamos si queremos eliminar categorías
+    $('[data-toggle="deleteSaving"]').jConfirm({
+        //string: confirm button text
+        confirm_text: 'Si',
+        //string: deny button text
+        deny_text: 'No',
+        //string ('auto','top','bottom','left','right'): prefer#78261f location of the tooltip (defaults to auto if no space)
+        position: 'left',
+        //string: class(es) to add to the tooltip
+        class: '',
+        //boolean: if true, the deny button will be shown
+        show_deny_btn: true,
+        //string ('black', 'white', 'bootstrap-4', 'bootstrap-4-white')
+        theme: 'bootstrap-4-white',
+        //string ('tiny', 'small', 'medium', 'large')
+        size: 'small'
+    }).on('confirm', function(e){
+        var id =  $(this).data('id');
+        var send = $('.delSaving').attr('action');
+        $.ajax({
+            type:'POST',
+            url:send,
+            data:{id: id}
+        }).done(function(data){
+            if(data['success'] == "done"){
+                location.reload()
             }
-        });
-
-        // Actualizamos campos ahorro mensual fijo
-        $('.updateCon').editable({
-            url: '/updateConfig',
-            type: 'text',
-            pk: 1,
-            name: 'name',
-            title: 'Enter name'
-        });
-
-        // Actualizamos campo de ahorro mensual por mes
-        $('.updateSav').editable({
-            url: '/updateSaving',
-            type: 'text',
-            pk: 1,
-            name: 'name',
-            title: 'Enter name'
-        });
-
-        // Confirmamos si queremos eliminar categorías
-        $('[data-toggle="deleteSaving"]').jConfirm({
-            //string: confirm button text
-            confirm_text: 'Si',
-            //string: deny button text
-            deny_text: 'No',
-            //string ('auto','top','bottom','left','right'): prefer#78261f location of the tooltip (defaults to auto if no space)
-            position: 'left',
-            //string: class(es) to add to the tooltip
-            class: '',
-            //boolean: if true, the deny button will be shown
-            show_deny_btn: true,
-            //string ('black', 'white', 'bootstrap-4', 'bootstrap-4-white')
-            theme: 'bootstrap-4-white',
-            //string ('tiny', 'small', 'medium', 'large')
-            size: 'small'
-        }).on('confirm', function(e){
-            var id =  $(this).data('id');
-            var send = $('.delSaving').attr('action');
-            $.ajax({
-                type:'POST',
-                url:send,
-                data:{id: id}
-            }).done(function(data){
-                if(data['success'] == "done"){
-                    location.reload()
-                }
-            }).fail(function(err){
-                console.log(err);   
-            });
+        }).fail(function(err){
+            console.log(err);   
         });
     });
-    </script>
-    <!-- Js --> 
+    });
+</script>
+<!-- Js --> 
 @endsection

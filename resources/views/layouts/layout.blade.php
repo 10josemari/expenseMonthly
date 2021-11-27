@@ -48,6 +48,7 @@
                         <li class="nav-item dropdown">
                           <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-plus"></i> Secciones</a>
                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item {{ setActive('salary') }}" href="{{ route('salary') }}"><i class="fas fa-euro-sign"></i> Salarios</a>
                             <a class="dropdown-item {{ setActive('category') }}" href="{{ route('category') }}"><i class="fab fa-cuttlefish"></i> Categorías</a>
                             <a class="dropdown-item" href="#">Another action</a>
                             <div class="dropdown-divider"></div>
