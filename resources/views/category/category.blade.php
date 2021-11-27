@@ -9,11 +9,11 @@
     <div class="card-header">
             <div class="floatLeft">Insertar categoría</div> 
             <div class="floatRight">
-                <i class="fas fa-compress fa-compress-cat"></i> 
-                <i class="fas fa-compress-arrows-alt fa-compress-arrows-alt-cat" style="display:none;"></i>
+                <i class="fas fa-compress fa-compress-cat" style="display:none;"></i> 
+                <i class="fas fa-compress-arrows-alt fa-compress-arrows-alt-cat"></i>
             </div>
     </div>
-    <div class="card-body cardBodyCategory" style="display:none;">
+    <div class="card-body cardBodyCategory">
         <form id="formAddCategory" action="/addCategory" method="POST">
             @csrf
             <label for="inputName" class="sr-only">Nombre de categoría</label>
@@ -53,7 +53,7 @@
                 <td>
                     <form class="delCategory" action="/deleteCategory" method="POST">
                         @csrf
-                        <a href="" data-toggle="deleteCategory" data-question="¿Quieres eliminar este registro?" data-id="{{ $category->id }}"><i class="fas fa-trash red"></i></a>
+                        <a href="" data-toggle="deleteCategory" data-question="¿Quieres desactivar este registro?" data-id="{{ $category->id }}"><i class="fas fa-trash red"></i></a>
                     </form>
                 </td>
             </tr>
@@ -64,12 +64,53 @@
             </tr>
         @endif
         </tbody>
+        @if (count($categories) > 0)
         <tfoot>
           <tr><td colspan="3">{{ $categories->links() }}</td></tr>
         </tfoot>
+        @endif
     </table>
 </div>
 <!-- listado que muestra las categorías creadas -->
+
+<!-- listado que muestra las categorías desactivadas -->
+<div class="marginSide">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripción</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+        @if (count($categoriesNull) > 0)
+            @foreach ($categoriesNull as $categoryNull)
+            <tr>
+                <td><a href="" class="updateCat" data-name="name" data-type="text" data-pk="{{$categoryNull->id}}" data-title="Edita el nombre">{{ $categoryNull->name }}</a></td>
+                <td><a href="" class="updateCat" data-name="description" data-type="text" data-pk="{{$categoryNull->id}}" data-title="Edita la descripción">{{ $categoryNull->description }}</a></td>
+                <td>
+                    <form class="actCategory" action="/reactivateCategory" method="POST">
+                        @csrf
+                        <a href="" data-toggle="reactivateCategory" data-question="¿Quieres activar este registro?" data-id="{{ $categoryNull->id }}"><i class="fas fa-check green"></i></a>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        @else
+            <tr>
+              <td class="textCenter" colspan="3">No hay categorías desactivadas</td>
+            </tr>
+        @endif
+        </tbody>
+        @if (count($categoriesNull) > 0)
+        <tfoot>
+          <tr><td colspan="3">{{ $categoriesNull->links() }}</td></tr>
+        </tfoot>
+        @endif
+    </table>
+</div>
+<!-- listado que muestra las categorías desactivadas -->
 
 <!-- Js --> 
 <script type="text/javascript">
@@ -108,6 +149,38 @@ $(document).ready(function(){
     }).on('confirm', function(e){
         var id =  $(this).data('id');
         var send = $('.delCategory').attr('action');
+        $.ajax({
+            type:'POST',
+            url:send,
+            data:{id: id}
+        }).done(function(data){
+            if(data['success'] == "done"){
+                location.reload()
+            }
+        }).fail(function(err){
+            console.log(err);   
+        });
+    });
+
+    // Confirmamos si queremos activar categorías
+    $('[data-toggle="reactivateCategory"]').jConfirm({
+        //string: confirm button text
+        confirm_text: 'Si',
+        //string: deny button text
+        deny_text: 'No',
+        //string ('auto','top','bottom','left','right'): prefer#78261f location of the tooltip (defaults to auto if no space)
+        position: 'left',
+        //string: class(es) to add to the tooltip
+        class: '',
+        //boolean: if true, the deny button will be shown
+        show_deny_btn: true,
+        //string ('black', 'white', 'bootstrap-4', 'bootstrap-4-white')
+        theme: 'bootstrap-4-white',
+        //string ('tiny', 'small', 'medium', 'large')
+        size: 'small'
+    }).on('confirm', function(e){
+        var id =  $(this).data('id');
+        var send = $('.actCategory').attr('action');
         $.ajax({
             type:'POST',
             url:send,

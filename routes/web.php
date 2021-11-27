@@ -37,6 +37,7 @@ Route::get('/category', [App\Http\Controllers\CategoryController::class, 'index'
 Route::post('/addCategory', [App\Http\Controllers\CategoryController::class, 'addCategory'])->name('addCategory');
 Route::post('/updateCategory', [App\Http\Controllers\CategoryController::class, 'updateCategory'])->name('updateCategory');
 Route::post('/deleteCategory', [App\Http\Controllers\CategoryController::class, 'deleteCategory'])->name('deleteCategory');
+Route::post('/reactivateCategory', [App\Http\Controllers\CategoryController::class, 'reactivateCategory'])->name('reactivateCategory');
 
 /*
 |--------------------------------------------------------------------------

@@ -22,7 +22,6 @@ class CreateMonthlySavingsTable extends Migration
             $table->unsignedBigInteger('config_id');
             $table->dateTime('created_at', 0);
             $table->dateTime('updated_at', 0);
-            $table->dateTime('deleted_at', 0)->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('config_id')->references('id')->on('config')->onDelete('cascade');
         });

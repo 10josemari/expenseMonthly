@@ -17,7 +17,6 @@ class Config extends Model
         'option',
         'value',
         'created_at',
-        'updated_at',
-        'deleted_at'
+        'updated_at'
     ];      
 }

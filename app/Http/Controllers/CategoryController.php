@@ -14,8 +14,9 @@ class CategoryController extends Controller
      */
     public function index(){
         /** Recogemos si ya tenemos categorías insertadas */
-        $categories = Category::select('*')->paginate(10);
-        return view('category.category', compact('categories'));
+        $categories = Category::select('*')->where('deleted_at','=',NULL)->paginate(5);
+        $categoriesNull = Category::select('*')->where('deleted_at','!=',NULL)->paginate(5);
+        return view('category.category', compact('categories','categoriesNull'));
     }
 
     /**
@@ -58,7 +59,15 @@ class CategoryController extends Controller
      * Eliminamos una categoría
      */
     public function deleteCategory(Request $request){
-        Category::find($request->id)->delete();
+        Category::find($request->id)->update(['deleted_at' => Carbon::now()]);
+        return response()->json(['success'=>'done']);
+    }
+
+    /**
+     * Reactivamos una categoría
+     */
+    public function reactivateCategory(Request $request){
+        Category::find($request->id)->update(['deleted_at' => NULL]);
         return response()->json(['success'=>'done']);
     }
 }

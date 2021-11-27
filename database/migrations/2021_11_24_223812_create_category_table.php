@@ -19,6 +19,7 @@ class CreateCategoryTable extends Migration
             $table->string('description');
             $table->dateTime('created_at', 0);
             $table->dateTime('updated_at', 0);
+            $table->dateTime('deleted_at', 0)->nullable();
         });
     }
 
