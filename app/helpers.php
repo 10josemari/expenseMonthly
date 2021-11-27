@@ -50,3 +50,49 @@ function getMonth($month){
         break;
     }
 }
+
+/**
+ * Obtenemos el mes siguiente
+ */
+function getNextMonth($month){
+    switch ($month) {
+        case '1':
+            return getMonth($month+1)." - ".date('Y');
+        break;
+        case '2':
+            return getMonth($month+1)." - ".date('Y');
+        break;
+        case '3':
+            return getMonth($month+1)." - ".date('Y');
+        break;
+        case '4':
+            return getMonth($month+1)." - ".date('Y');
+        break;
+        case '5':
+            return getMonth($month+1)." - ".date('Y');
+        break;
+        case '6':
+            return getMonth($month+1)." - ".date('Y');
+        break;
+        case '7':
+            return getMonth($month+1)." - ".date('Y');
+        break;
+        case '8':
+            return getMonth($month+1)." - ".date('Y');
+        break;
+        case '9':
+            return getMonth($month+1)." - ".date('Y');
+        break;
+        case '10':
+            return getMonth($month+1)." - ".date('Y');
+        break;
+        case '11':
+            return getMonth($month+1)." - ".date('Y');
+        break;
+        case '12':
+            $month = 1;
+            $year = date('Y')+1;
+            return getMonth($month)." - ".$year;
+        break;
+    }
+}
