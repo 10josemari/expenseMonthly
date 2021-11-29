@@ -3,78 +3,74 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-use App\Models\MonthlySavings;
 use Illuminate\Http\Request;
+use App\Models\SalaryBank;
+use App\Models\Salary;
 use App\Models\Config;
 use Carbon\Carbon;
 
 class ConfigController extends Controller
 {
     /**
-     * Vamos a la vista config
+     * Vamos a la vista config.
+     * Comprobamos si ya tenemos por defecto asignados opciones de configuración. Tabla config.
+     * - Obtenemos la variable $configs donde recogemos los valores por defecto de importe inicial y ahorro fijo mensual.
+     * - Obtenemos la variable $salaries donde recogemos todos los salarios introducidos.
      */
     public function index(){
-        /**
-         * Comprobamos si ya tenemos por defecto asignados opciones de configuración
-         * Comprobamos ademas si tiene registro en monthlySavings
-         */
         $configs = Config::select('*')->get();
-        $monthlySavings = MonthlySavings::select('*')->orderBy('id', 'desc')->get();
-        return view('config.config', compact('configs','monthlySavings'));
+        $salaries = Salary::select('*')->orderBy('id', 'desc')->get();
+        return view('config.config', compact('configs','salaries'));
     }
 
     /**
-     * Actualizamos los valores iniciales de config
-     */
+     * Actualizamos los valores iniciales de config.
+     * Ya que tenemos dos ids fijos para ambas entidades, hacemos un switch para actuar de distinta manera entre una u otra entidad.
+     * - importe inicial (1). Este campo solo será rellenable 1 vez. No podrá ser modificado más.
+     * - ahorro mensual (2). Este campo podrá ser modificado siempre, pero tiene el siguiente comportamiento.
+     *  -> Si no hay salario de ese mes que se está insertando se modificada en la tabla config directamente.
+    */
     public function updateConfig(Request $request){
-        /**
-         * Comprobamos si la opción modificada ya tiene registro distinto a 0. Al hablar de cuantía económica comprobamos que sea mayor que 0.
-         * Si el valor es mayor que 0, lo insertamos en la tabla monthly_savings para que haga referencia a un ahorro distinto de otro mes.
-         */
-        $valueConfig = Config::select('*')->where('id','=',$request->pk)->get();
-        if($valueConfig[0]['value'] != "0.00"){
-            // Obtenemos el mes
-            $month = date("m");
-            // Obtenemos el año
-            $year = date("Y");
-            // Obtenemos el id
-            $id = auth()->user()->id;
-
-            // Comprobar si tenemo ya registro creado para ese mes
-            $monthlySavings = MonthlySavings::select('*')
-                ->where('month','=',$month)
-                ->where('year','=',$year)
-            ->get();
-            if(count($monthlySavings) == 0){
-                MonthlySavings::create([
-                    'month' => $month,
-                    'year' => $year,
-                    'value' => $request->value,
-                    'user_id' => $id,
-                    'config_id' => $request->pk,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
-                ]);
-            }
-        } else {
-            Config::find($request->pk)->update(['value' => $request->value], ['updated_at' => Carbon::now()]);
+        switch ($request->pk) {
+            case 1:
+                $valueConfig = Config::select('*')->where('id','=',$request->pk)->get();
+                if($valueConfig[0]['value'] == "0.00"){
+                    Config::find($request->pk)->update(['value' => $request->value], ['updated_at' => Carbon::now()]);
+                }
+            break;
+            case 2:
+                // Obtenemos el mes-año actual de la actualización y mes-año anterior (solo cambiaría o necesario para el mes de enero)
+                $afterDates = explode("-",getRestMonth(date('m')));
+                $salarySaveMonthly = Salary::select('*')->where('config_id','=',$request->pk)->where('month','=',$afterDates[0])->where('year','=',$afterDates[1])->get();
+                // Si es 0, editamos el valor por defecto de la configuración.
+                if(count($salarySaveMonthly) == 0){
+                    Config::find($request->pk)->update(['value' => $request->value], ['updated_at' => Carbon::now()]);
+                }
+            break;
         }
         return response()->json(['success'=>'done']);
     }
 
     /**
-     * Actualizamos los valores iniciales de config
+     * Actualizamos el ahorro mensual referente al mes en cuestión. 
+     * - Modificamos el campo saveMonthly de la tabla salary
+     * - Modificamos el campo bank_adding_savings de la tabla salary_bank.
+     * - Obtenemos el campo saveMonthly y bank_adding_savings para tratarlos de la siguiente forma:
+     *  -> si el campo saveMonthly es mayor que valor modificado, restamos estos y la diferencia se la restamos a bank_adding_savings.
+     *  -> si el campo saveMonthly es menos que valor modificado, restamos estos y la diferencia se la sumamos a bank_adding_savings.
      */
     public function updateSaving(Request $request){
-        MonthlySavings::find($request->pk)->update(['value' => $request->value], ['updated_at' => Carbon::now()]);
+        $salary = Salary::select('salary.id','salary.saveMonthly','salary_bank.bank_adding_savings')->join('salary_bank','salary_bank.salary_id','=','salary.id')->where('salary.id','=',$request->pk)->get();
+        if($salary[0]['saveMonthly'] > $request->value){
+            $bank_adding_savings = $salary[0]['saveMonthly'] - $request->value;
+            $bank_adding_savings = $salary[0]['bank_adding_savings'] - $bank_adding_savings;
+        } else {
+            $bank_adding_savings = $request->value - $salary[0]['saveMonthly'];
+            $bank_adding_savings = $salary[0]['bank_adding_savings'] + $bank_adding_savings;
+        }
+        
+        Salary::find($request->pk)->update(['saveMonthly' => $request->value],['updated_at' => Carbon::now()]);
+        SalaryBank::find($request->pk)->update(['bank_adding_savings' => $bank_adding_savings], ['updated_at' => Carbon::now()]);
         return response()->json(['success'=>'done']);
     }
-
-    /**
-     * Eliminamos un ahorro mensual
-     */
-    public function deleteSaving(Request $request){
-        MonthlySavings::find($request->id)->delete();
-        return response()->json(['success'=>'done']);
-    }    
 }
