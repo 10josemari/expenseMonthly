@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSalaryTable extends Migration
+class CreateSalaryBankTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,15 @@ class CreateSalaryTable extends Migration
      */
     public function up()
     {
-        Schema::create('salary', function (Blueprint $table) {
+        Schema::create('salary_bank', function (Blueprint $table) {
             $table->id('id');
-            $table->string('name');
-            $table->string('month');
-            $table->string('year');
-            $table->decimal('money', 10, 2);
-            $table->decimal('saveMonthly', 10, 2);
-            $table->unsignedBigInteger('config_id');
+            $table->decimal('bank_previous_month',10,2);
+            $table->decimal('bank_adding_savings',10,2);
+            $table->decimal('bank_now_total',10,2);
+            $table->unsignedBigInteger('salary_id');
             $table->dateTime('created_at', 0);
             $table->dateTime('updated_at', 0);
-            $table->foreign('config_id')->references('id')->on('config');
+            $table->foreign('salary_id')->references('id')->on('salary');
         });
     }
 
@@ -34,6 +32,6 @@ class CreateSalaryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('salary');
+        Schema::dropIfExists('salary_bank');
     }
 }
