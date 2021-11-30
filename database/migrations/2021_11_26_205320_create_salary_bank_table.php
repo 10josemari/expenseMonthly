@@ -21,7 +21,7 @@ class CreateSalaryBankTable extends Migration
             $table->unsignedBigInteger('salary_id');
             $table->dateTime('created_at', 0);
             $table->dateTime('updated_at', 0);
-            $table->foreign('salary_id')->references('id')->on('salary');
+            $table->foreign('salary_id')->references('id')->on('salary')->onDelete('cascade');
         });
     }
 

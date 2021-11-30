@@ -14,10 +14,11 @@ class Salary extends Model
 
     // Campos que se podrán rellenar al hacer insert o updates
     protected $fillable = [
-        'name',
-        'money',
         'month',
         'year',
+        'money',
+        'saveMonthly',
+        'config_id',
         'created_at',
         'updated_at'
     ];     

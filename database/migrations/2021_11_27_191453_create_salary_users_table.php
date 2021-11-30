@@ -15,11 +15,12 @@ class CreateSalaryUsersTable extends Migration
     {
         Schema::create('salary_users', function (Blueprint $table) {
             $table->id('id');
+            $table->string('name');
             $table->decimal('amount',10,2);
             $table->unsignedBigInteger('salary_id');
             $table->dateTime('created_at', 0);
             $table->dateTime('updated_at', 0);
-            $table->foreign('salary_id')->references('id')->on('salary');
+            $table->foreign('salary_id')->references('id')->on('salary')->onDelete('cascade');
         });        
     }
 

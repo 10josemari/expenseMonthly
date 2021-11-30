@@ -4,8 +4,8 @@
 
 @section('body')
 <!-- panel para insertar salarios -->
-<div class="card marginTop marginSide">
-    <div class="card-header">
+<div class="card marginTop marginSide cardAddSalary">
+    <div class="card-header cardAddSalary">
             <div class="floatLeft">Salario mensual</div>
             <div class="floatRight">
                 <i class="fas fa-compress fa-compress-sal" style="display:none;"></i> 
@@ -13,13 +13,6 @@
             </div>
     </div>
     <div class="card-body cardBodySalary">
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-          <strong>Atención!</strong> No se podrán añadir más de 2 salarios al mes.
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-
         <form id="formAddSalary" action="/addSalary" method="POST">
             @csrf
             <label for="inputName" class="sr-only">Nombre</label>
@@ -38,13 +31,44 @@
 </div>
 <!-- panel para insertar salarios -->
 
+<!-- panel para insertar salarios de un mes concreto -->
+<div class="card marginTop marginSide cardAddSalaryMonth" style="display:none;">
+    <div class="card-header cardAddSalaryMonth">
+        <div class="floatLeft">Salario mensual - mes concreto</div>
+        <div class="floatRight">
+            <i class="fas fa-compress fa-compress-salMonth" style="display:none;"></i> 
+            <i class="fas fa-compress-arrows-alt fa-compress-arrows-alt-salMonth"></i>
+        </div>
+    </div>
+    <div class="card-body cardBodySalaryMonth">
+        <form id="formAddSalaryMonth" action="/addSalaryMonth" method="POST">
+            @csrf
+            <input type="hidden" id="inputMonth" class="form-control" name="month" placeholder="Mes" value="" />
+            <input type="hidden" id="inputYear" class="form-control" name="year" placeholder="Año" value="" />
+            <label for="inputName" class="sr-only">Nombre</label>
+            <input type="text" id="inputName" class="form-control" name="name" placeholder="Nombre" value="{{ old('name') }}" autofocus @if ($errors->get('name')) style="border-color: #721c24;" @endif />
+            @if ($errors->get('name')) 
+                <small class="red">Error, debes rellenar el campo nombre</small>    
+            @endif      
+            <label for="inputSalary" class="sr-only">Salario</label>
+            <input type="text" id="inputSalary" class="form-control" name="salary" placeholder="Salario" @if ($errors->get('salary')) style="border-color: #721c24;" @endif />
+            @if ($errors->get('salary')) 
+                <small class="red">Error, debes rellenar el campo salario o el formato decimal introducido no es correcto</small>    
+            @endif
+            <button class="btn btn-info btn-block btn-addSalary marginTop" type="submit" id="marginTop">Añadir salario</button>
+        </form>
+    </div>
+</div>
+<!-- panel para insertar salarios de un mes concreto -->
+
 <hr class="marginSide">
 
-<!-- listado de salarios creados -->
+<!-- panel para la visualización de salarios -->
 <div class="marginSide">
     <table class="table">
         <thead>
           <tr>
+            <th scope="col">#</th>
             <th scope="col">Nombre</th>
             <th scope="col">Sueldo</th>
             <th scope="col">Mes-Año</th>
@@ -55,15 +79,30 @@
         @if (count($salaries) > 0)
             @foreach ($salaries as $salary)
             <tr>
-                <td class="textLeft"><a href="" class="updateSal" data-name="name" data-type="text" data-pk="{{$salary->id}}" data-title="Edita el nombre">{{ $salary->name }}</a></td>
-                <td class="textLeft"><a href="" class="updateSal" data-name="money" data-type="text" data-pk="{{$salary->id}}" data-title="Edita el sueldo">{{ $salary->money }}</a></td>
-                <td><strong>{{ getMonth($salary->month) }} - {{ $salary->year }} / {{ getNextMonth($salary->month) }}</strong></td>
-                <td>
-                    <form class="delSalary" action="/deleteSalary" method="POST">
-                        @csrf
-                        <a href="" data-toggle="deleteSalary" data-question="¿Quieres eliminar este registro?" data-id="{{ $salary->id }}"><i class="fas fa-trash red"></i></a>
-                    </form>
+                <td class="textLeft">
+                    @if(count($countSalaries) < 2 && comprobateDate($salary->month,$salary->year))
+                        <i class="fas fa-plus addSalaryMonth" data-month="{{ $salary->month }}" data-year="{{ $salary->year }}"></i>
+                        <i class="fas fa-minus closeSalaryMonth" style="display:none;"></i>
+                    @else
+                        <i class="fas fa-ban"></i>
+                    @endif
                 </td>
+                @if(comprobateDate($salary->month,$salary->year))
+                    <td class="textLeft"><a href="" class="updateSal" data-name="name" data-type="text" data-pk="{{$salary->id}}" data-title="Edita el nombre">{{ $salary->name }}</a></td>
+                    <td class="textLeft"><a href="" class="updateSal" data-name="amount" data-type="text" data-pk="{{$salary->id}}" data-title="Edita el sueldo">{{ $salary->amount }}</a></td>
+                    <td><strong>{{ getMonth($salary->month) }} - {{ $salary->year }} / {{ getNextMonthTitle($salary->month) }}</strong></td>
+                    <td>
+                        <form class="delSalary" action="/deleteSalary" method="POST">
+                            @csrf
+                            <a href="" data-toggle="deleteSalary" data-question="¿Quieres eliminar este registro?" data-id="{{ $salary->id }}"><i class="fas fa-trash red"></i></a>
+                        </form>
+                    </td>
+                @else
+                    <td class="textLeft">{{ $salary->name }}</td>
+                    <td class="textLeft">{{ $salary->amount }}</td>
+                    <td><strong>{{ getMonth($salary->month) }} - {{ $salary->year }} / {{ getNextMonthTitle($salary->month) }}</strong></td>
+                    <td></td>
+                @endif
             </tr>
             @endforeach
         @else
@@ -79,7 +118,7 @@
         @endif
     </table>
 </div>
-<!-- listado de salarios creados -->
+<!-- panel para la visualización de salarios -->
 
 <!-- Js --> 
 <script type="text/javascript">
@@ -97,6 +136,26 @@ $(document).ready(function(){
         pk: 1,
         name: 'name',
         title: 'Enter name'
+    });
+
+    // Controlamos la visibilidad de botón y div para añadir salarios
+    $(".addSalaryMonth").on('click', function(e) {
+        $("#inputMonth").val($(this).data('month'));
+        $("#inputYear").val($(this).data('year'));
+        $(".cardAddSalaryMonth").css("padding-bottom","2em");
+        $(".cardAddSalary").css("display","none");
+        $(".addSalaryMonth").css("display","none");
+        $(".closeSalaryMonth").css("display","block");
+        $(".cardAddSalaryMonth").css("display","block");
+    });
+    $(".closeSalaryMonth").on('click', function(e) {
+        $("#inputMonth").val("");
+        $("#inputYear").val("");
+        $(".cardAddSalary").css("padding-bottom","2em");
+        $(".cardAddSalary").css("display","block");
+        $(".addSalaryMonth").css("display","block");
+        $(".closeSalaryMonth").css("display","none");
+        $(".cardAddSalaryMonth").css("display","none");
     });
 
     // Confirmamos si queremos eliminar salario (borrado físico)
