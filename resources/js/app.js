@@ -76,6 +76,18 @@ $(".fa-compress-arrows-alt-sal").on('click', function(e) {
     $(".fa-compress-sal").css('display','block');
 });
 
+$(".fa-compress-salMonth").on('click', function(e) {
+    $('.cardBodySalaryMonth').css('display','block');
+    $(".fa-compress-arrows-alt-salMonth").css('display','block');
+    $(".fa-compress-salMonth").css('display','none');
+});
+
+$(".fa-compress-arrows-alt-salMonth").on('click', function(e) {
+    $('.cardBodySalaryMonth').css('display','none');
+    $(".fa-compress-arrows-alt-salMonth").css('display','none');
+    $(".fa-compress-salMonth").css('display','block');
+});
+
 /**
  * Vista Home
  */
