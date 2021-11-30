@@ -10,10 +10,12 @@ class CategoryController extends Controller
 {
     /**
      * Función index que redirecciona a la vista de category
-     * Con compact pasamos las variables. Si hay varias sería compact('categories','agent')
+     * Con compact pasamos las variables. Si hay varias sería compact('categories','agent').
+     * Recogemos si ya tenemos o no categorías metidas. 
+     * $categories muestra todas las categorías activas.
+     * $categoriesNull muestra todas las categorias inactivas.
      */
     public function index(){
-        /** Recogemos si ya tenemos categorías insertadas */
         $categories = Category::select('*')->where('deleted_at','=',NULL)->paginate(5);
         $categoriesNull = Category::select('*')->where('deleted_at','!=',NULL)->paginate(5);
         return view('category.category', compact('categories','categoriesNull'));
@@ -41,7 +43,7 @@ class CategoryController extends Controller
     }
 
     /**
-    * Actualizamos el nombre de la categoría
+    * Actualizamos el nombre y la descripción de la categoría
     */
     public function updateCategory(Request $request){
         switch ($request->name) {
