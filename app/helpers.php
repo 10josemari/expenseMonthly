@@ -8,7 +8,19 @@ function setActive($routeName){
 }
 
 /**
- * 
+ * Comprobamos si la el mes-año recibido es igual al actual
+ */
+function comprobateDate($month,$year){
+    $actually = date('m').date('Y');
+    if($month.$year == $actually){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
+ * Retornamos el nombre del mes pasado.
  */
 function getMonth($month){
     switch ($month) {
@@ -52,9 +64,9 @@ function getMonth($month){
 }
 
 /**
- * Obtenemos el mes siguiente
+ * Retornamos el nombre del mes siguiente al pasado
  */
-function getNextMonth($month){
+function getNextMonthTitle($month){
     switch ($month) {
         case '01':
             return getMonth($month+1)." - ".date('Y');
@@ -98,7 +110,7 @@ function getNextMonth($month){
 }
 
 /**
- * 
+ * Retornamos el mes-año anterior al pasado. Lo devolvemos en formato 12-2021
  */
 function getRestMonth($month){
     switch ($month) {
@@ -141,4 +153,57 @@ function getRestMonth($month){
             return ($month-1)."-".date('Y');
         break;
     }
+}
+
+/**
+ * Retornamos el mes-año posterior al pasado. Lo devolvemos en formato 12-2021
+ */
+function getNextMonth($month){
+    switch ($month) {
+        case '01':
+            return ($month+1)." - ".date('Y');
+        break;
+        case '02':
+            return ($month+1)." - ".date('Y');
+        break;
+        case '03':
+            return ($month+1)." - ".date('Y');
+        break;
+        case '04':
+            return ($month+1)." - ".date('Y');
+        break;
+        case '05':
+            return ($month+1)." - ".date('Y');
+        break;
+        case '06':
+            return ($month+1)." - ".date('Y');
+        break;
+        case '07':
+            return ($month+1)." - ".date('Y');
+        break;
+        case '08':
+            return ($month+1)." - ".date('Y');
+        break;
+        case '09':
+            return ($month+1)." - ".date('Y');
+        break;
+        case '10':
+            return ($month+1)." - ".date('Y');
+        break;
+        case '11':
+            return ($month+1)." - ".date('Y');
+        break;
+        case '12':
+            $month = 1;
+            $year = date('Y')+1;
+            return $month." - ".$year;
+        break;
+    }
+}
+
+/**
+ * Retornamos la suma de las monedas parala vista hucha
+ */
+function getTotal($type,$amount){
+    return $type * $amount;
 }
