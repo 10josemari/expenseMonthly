@@ -52,7 +52,7 @@
                               <a class="dropdown-item {{ setActive('salary') }}" href="{{ route('salary') }}"><i class="fas fa-euro-sign"></i> Salarios</a>
                               <a class="dropdown-item {{ setActive('income') }}" href="{{ route('income') }}"><i class="fas fa-comment-dollar"></i> Transferencias/Ingresos</a>
                               <div class="dropdown-divider"></div>
-                              <a class="dropdown-item {{ setActive('category') }}" href="{{ route('category') }}"><i class="fas fa-coins"></i> Gastos mensuales</a>
+                              <a class="dropdown-item {{ setActive('expense') }}" href="{{ route('expense') }}"><i class="fas fa-coins"></i> Gastos mensuales</a>
                             </div>
                           </li>
                           <li class="nav-item {{ setActive('category') }}"><a class="nav-link" href="{{ route('category') }}"><i class="fas fa-book"></i></i> Historial de gastos</a></li>

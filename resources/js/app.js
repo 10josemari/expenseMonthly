@@ -117,3 +117,18 @@ $(".fa-compress-arrows-alt-income").on('click', function(e) {
     $(".fa-compress-arrows-alt-income").css('display','none');
     $(".fa-compress-income").css('display','block');
 });
+
+/**
+ * Vista Expense
+ */
+ $(".fa-compress-expense").on('click', function(e) {
+    $('.cardBodyExpense').css('display','block');
+    $(".fa-compress-arrows-alt-expense").css('display','block');
+    $(".fa-compress-expense").css('display','none');
+});
+
+$(".fa-compress-arrows-alt-expense").on('click', function(e) {
+    $('.cardBodyExpense').css('display','none');
+    $(".fa-compress-arrows-alt-expense").css('display','none');
+    $(".fa-compress-expense").css('display','block');
+});

@@ -84,6 +84,18 @@ Route::post('/deleteIncome', [App\Http\Controllers\FinancialActivityController::
 
 /*
 |--------------------------------------------------------------------------
+| Expense
+|--------------------------------------------------------------------------
+|
+|
+*/
+Route::get('/expense', [App\Http\Controllers\FinancialActivityController::class, 'indexExpense'])->name('expense');
+Route::post('/addExpense', [App\Http\Controllers\FinancialActivityController::class, 'addExpense'])->name('addExpense');
+Route::post('/updateExpense', [App\Http\Controllers\FinancialActivityController::class, 'updateExpense'])->name('updateExpense');
+Route::post('/deleteExpense', [App\Http\Controllers\FinancialActivityController::class, 'deleteExpense'])->name('deleteExpense');
+
+/*
+|--------------------------------------------------------------------------
 | Home
 |--------------------------------------------------------------------------
 |
