@@ -3,7 +3,6 @@
 @section('title','Transferencias/Ingresos')
 
 @section('body')
-<!--{{auth()->user()}}-->
 <!-- panel de transferencias/ingresos -->
 <div class="card marginTop marginSide">
     <div class="card-header">
@@ -43,4 +42,96 @@
 <!-- panel de transferencias/ingresos -->
 
 <hr class="marginSide">
+
+<!-- Panel de editar o eliminar transferencias/ingresos -->
+<div class="marginSide">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Acción ingreso</th>
+            <th scope="col">Valor</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+        @if (count($incomes) > 0)
+            @foreach ($incomes as $income)
+            <tr>
+                <td><a href="" class="updateInc" data-name="nameAction" data-type="text" data-pk="{{$income->id}}" data-title="Edita el nombre de la acción">{{ $income->nameAction }}</a></td>
+                <td><a href="" class="updateInc" data-name="value" data-type="text" data-pk="{{$income->id}}" data-title="Edita la cantidad">{{ $income->value }}</a></td>
+                <td>
+                    <form class="delIncome" action="/deleteIncome" method="POST">
+                        @csrf
+                        <a href="" data-toggle="deleteIncome" data-question="¿Quieres eliminar este registro?" data-id="{{ $income->id }}"><i class="fas fa-trash red"></i></a>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        @else
+            <tr>
+              <td class="textCenter" colspan="3">No hay ingresos añadidos</td>
+            </tr>
+        @endif
+        </tbody>
+        @if (count($incomes) > 0)
+        <tfoot>
+          <tr><td colspan="3">{{ $incomes->links() }}</td></tr>
+        </tfoot>
+        @endif
+    </table>
+</div>
+<!-- Panel de editar o eliminar transferencias/ingresos -->
+
+<!-- Js -->
+<script type="text/javascript">
+$(document).ready(function(){
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    // Actualizamos campos de categorías
+    $('.updateInc').editable({
+        url: '/updateIncome',
+        type: 'text',
+        pk: 1,
+        name: 'name',
+        title: 'Enter name'
+    });
+
+    // Confirmamos si queremos eliminar categorías
+    $('[data-toggle="deleteIncome"]').jConfirm({
+        //string: confirm button text
+        confirm_text: 'Si',
+        //string: deny button text
+        deny_text: 'No',
+        //string ('auto','top','bottom','left','right'): prefer#78261f location of the tooltip (defaults to auto if no space)
+        position: 'left',
+        //string: class(es) to add to the tooltip
+        class: '',
+        //boolean: if true, the deny button will be shown
+        show_deny_btn: true,
+        //string ('black', 'white', 'bootstrap-4', 'bootstrap-4-white')
+        theme: 'bootstrap-4-white',
+        //string ('tiny', 'small', 'medium', 'large')
+        size: 'small'
+    }).on('confirm', function(e){
+        var id =  $(this).data('id');
+        var send = $('.delIncome').attr('action');
+        $.ajax({
+            type:'POST',
+            url:send,
+            data:{id: id}
+        }).done(function(data){
+            if(data['success'] == "done"){
+                location.reload()
+            }
+        }).fail(function(err){
+            console.log(err);
+        });
+    });
+});
+</script>
+<!-- Js -->
 @endsection

@@ -79,6 +79,8 @@ Route::post('/cleanPiggyBank', [App\Http\Controllers\PiggyBankController::class,
 */
 Route::get('/income', [App\Http\Controllers\FinancialActivityController::class, 'indexIncome'])->name('income');
 Route::post('/addIncome', [App\Http\Controllers\FinancialActivityController::class, 'addIncome'])->name('addIncome');
+Route::post('/updateIncome', [App\Http\Controllers\FinancialActivityController::class, 'updateIncome'])->name('updateIncome');
+Route::post('/deleteIncome', [App\Http\Controllers\FinancialActivityController::class, 'deleteIncome'])->name('deleteIncome');
 
 /*
 |--------------------------------------------------------------------------

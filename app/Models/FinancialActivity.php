@@ -16,11 +16,12 @@ class FinancialActivity extends Model
     protected $fillable = [
         'month',
         'year',
-        'name',
+        'nameAction',
         'type',
         'value',
-        'user_id',
         'category_id',
+        'user_id',
+        'salary_id',
         'created_at',
         'updated_at'
     ];     
