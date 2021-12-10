@@ -15,10 +15,10 @@
     <div class="card-body cardBodyIncome">
         <form id="formAddIncome" action="/addIncome" method="POST">
             @csrf
-            <label for="inputName" class="sr-only">Nombre</label>
+            <label for="inputName" class="sr-only">Descripción</label>
             <input type="text" id="inputName" class="form-control" name="name" placeholder="Descripción ingreso" value="{{ old('name') }}" autofocus @if ($errors->get('name')) style="border-color: #721c24;" @endif />
             @if ($errors->get('name')) 
-                <small class="red">Error, debes rellenar el campo nombre</small>    
+                <small class="red">Error, debes rellenar el campo descripción</small>    
             @endif 
             <label for="inputIncome" class="sr-only">Categoría</label>
             <select class="form-control" id="inputIncome" class="form-control" name="category" placeholder="" @if ($errors->get('category')) style="border-color: #721c24;" @endif />
@@ -31,9 +31,9 @@
                 <small class="red">Error, debes seleccionar una categoría</small>    
             @endif 
             <label for="inputIncome" class="sr-only">Salario</label>
-            <input type="text" id="inputIncome" class="form-control" name="income" placeholder="Salario" @if ($errors->get('income')) style="border-color: #721c24;" @endif />
+            <input type="text" id="inputIncome" class="form-control" name="income" placeholder="10.00" @if ($errors->get('income')) style="border-color: #721c24;" @endif />
             @if ($errors->get('income')) 
-                <small class="red">Error, debes rellenar el campo salario o el formato decimal introducido no es correcto</small>    
+                <small class="red">Error, debes rellenar el campo con formato decimal.</small>    
             @endif
             <button class="btn btn-info btn-block btn-addIncome marginTop" type="submit" id="marginTop">Añadir transferencia/ingreso</button>
         </form>
