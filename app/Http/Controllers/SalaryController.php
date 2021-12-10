@@ -50,6 +50,8 @@ class SalaryController extends Controller
                 $bank_previous_month = $salary[0]['bank_now_total'];
                 $bank_adding_savings = $salary[0]['bank_now_total'] + $saveMonthly[0]['value'];
                 $bank_now_total = $salary[0]['bank_now_total'] + request()->salary;
+                // Marcamos a 1 el campo passed de la tabla salary
+                Salary::find($salary[0]['id'])->update(['passed' => 1], ['updated_at' => Carbon::now()]);
                 // Creamos la inserción del salario
                 Salary::create([
                     'money' => request()->salary,

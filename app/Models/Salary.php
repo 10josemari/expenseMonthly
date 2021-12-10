@@ -19,6 +19,7 @@ class Salary extends Model
         'money',
         'saveMonthly',
         'config_id',
+        'passed',
         'created_at',
         'updated_at'
     ];     
