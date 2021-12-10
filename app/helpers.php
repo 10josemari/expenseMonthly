@@ -207,3 +207,16 @@ function getNextMonth($month){
 function getTotal($type,$amount){
     return $type * $amount;
 }
+
+/**
+ * Damos formato a las fechas de base de datos [Y-m-d H:i:s] a [d-m-Y H:i:s]
+ */
+function getDateFormat($date){
+    $data = explode(" ",$date);
+
+    $date = explode("-",$data[0]);
+    $date = $date[2]."-".$date[1]."-".$date[0];
+    $hour = $data[1];
+
+    return $date." ".$hour;
+}
