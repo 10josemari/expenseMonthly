@@ -18,8 +18,13 @@
             <tr>
                 @switch(ucfirst($config->option))
                     @case('Importe inicial')
-                        <td><strong>{{ ucfirst($config->option) }}</strong></td>
-                        <td><a href="" class="updateCon" data-name="{{ $config->option }}" data-type="text" data-pk="{{$config->id}}" data-title="Edita la cuantía">{{ $config->value }}</a></td>
+                        @if($config->value == "0.00")
+                            <td><strong>{{ ucfirst($config->option) }}</strong></td>
+                            <td><a href="" class="updateCon" data-name="{{ $config->option }}" data-type="text" data-pk="{{$config->id}}" data-title="Edita la cuantía">{{ $config->value }}</a></td>
+                        @else
+                            <td><strong>{{ ucfirst($config->option) }}</strong></td>
+                            <td>{{ $config->value }}€</td>
+                        @endif
                     @break
                     @case('Ahorro mensual')
                         <td>@if(count($salaries) > 0) <div class="iconsConfig floatLeft marginRight"><i class="fas fa-plus showSavings iconInherit"></i> <i class="fas fa-minus hideSavings iconInherit" style="display:none;"></i></div> @endif <div class="title floatLeft"><strong>{{ ucfirst($config->option) }} fijo</strong></div></td>
@@ -53,12 +58,19 @@
                 <tbody>
                 @if (count($salaries) > 0)
                     @foreach ($salaries as $salary)
-                    <tr>
-                        <td><strong>{{ getMonth($salary->month) }} - {{ $salary->year }} / {{ getNextMonth($salary->month) }}</strong></td>
-                        <td><a href="" class="updateSav" data-name="{{ getMonth($salary->month) }} - {{ $salary->year }}" data-type="text" data-pk="{{$salary->id}}" data-month="{{ $salary->month }}" data-title="Edita la cuantía">{{ $salary->saveMonthly }}</a></td>
-                    </tr>
+                        @if($salary->passed == 0)
+                            <tr>
+                                <td><strong>{{ getMonth($salary->month) }} - {{ $salary->year }} / {{ getNextMonthTitle($salary->month) }}</strong></td>
+                                <td><a href="" class="updateSav" data-name="{{ getMonth($salary->month) }} - {{ $salary->year }}" data-type="text" data-pk="{{$salary->id}}" data-month="{{ $salary->month }}" data-title="Edita la cuantía">{{ $salary->saveMonthly }}</a></td>
+                            </tr>
+                        @else
+                            <tr>
+                                <td><strong>{{ getMonth($salary->month) }} - {{ $salary->year }} / {{ getNextMonthTitle($salary->month) }}</strong></td>
+                                <td>{{ $salary->saveMonthly }}</td>
+                            </tr>
+                        @endif
                     @endforeach
-                @else 
+                @else
                     <tr>
                         <td class="textCenter" colspan="3">No hay ahorro mensuales creados</td>
                     </tr>
@@ -86,7 +98,12 @@ $(document).ready(function(){
         type: 'text',
         pk: 1,
         name: 'name',
-        title: 'Enter name'
+        title: 'Enter name',
+        success: function(response, newValue) {
+            if(response['success'] == "done"){
+                location.reload()
+            }
+        }
     });
 
     // Actualizamos campo de ahorro mensual por mes
