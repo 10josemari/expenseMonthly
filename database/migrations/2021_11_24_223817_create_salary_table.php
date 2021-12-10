@@ -20,6 +20,7 @@ class CreateSalaryTable extends Migration
             $table->decimal('money', 10, 2);
             $table->decimal('saveMonthly', 10, 2);
             $table->unsignedBigInteger('config_id');
+            $table->boolean('passed')->default('0');
             $table->dateTime('created_at', 0);
             $table->dateTime('updated_at', 0);
             $table->foreign('config_id')->references('id')->on('config');
