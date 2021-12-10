@@ -102,7 +102,7 @@ function getNextMonthTitle($month){
             return getMonth($month+1)." - ".date('Y');
         break;
         case '12':
-            $month = 1;
+            $month = "01";
             $year = date('Y')+1;
             return getMonth($month)." - ".$year;
         break;
@@ -194,7 +194,7 @@ function getNextMonth($month){
             return ($month+1)." - ".date('Y');
         break;
         case '12':
-            $month = 1;
+            $month = "01";
             $year = date('Y')+1;
             return $month." - ".$year;
         break;
