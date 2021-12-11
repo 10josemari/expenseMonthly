@@ -8,11 +8,11 @@
     <div class="card-header">
             <div class="floatLeft">Resumen de gastos</div> 
             <div class="floatRight">
-                <i class="fas fa-compress fa-compress-home"></i> 
-                <i class="fas fa-compress-arrows-alt fa-compress-arrows-alt-home" style="display:none;"></i>
+                <i class="fas fa-compress fa-compress-home" style="display:none;"></i>
+                <i class="fas fa-compress-arrows-alt fa-compress-arrows-alt-home"></i>
             </div>
     </div>
-    <div class="card-body carBodyHome" style="display:none;">
+    <div class="card-body carBodyHome">
         <!-- Salarios -->
         <table class="table">
             <tbody>
@@ -82,14 +82,14 @@
                 @case('income')
                 <tr style="color:#155724;">
                     <td><i><strong>{{$financial->nameAction}} <br> <small>{{getDateFormat($financial->created_at)}}</small> </strong></i></td>
-                    <td><i><strong>Ingreso</strong></i></td>
+                    <td><i><strong>Ingreso</strong></i><br><small>{{$financial->name}}</small></td>
                     <td><i><strong>{{$financial->value}}€</strong></i></td>
                 </tr>
                 @break
                 @case('expense')
                 <tr style="color:#721c24;">
                     <td><i><strong>{{$financial->nameAction}} <br> <small>{{getDateFormat($financial->created_at)}}</small></strong></i></td>
-                    <td><i><strong>Gasto</strong></i></td>
+                    <td><i><strong>Gasto</strong></i><br><small>{{$financial->name}}</small></td>
                     <td><i><strong>{{$financial->value}}€</strong></i></td>
                 </tr>
                 @break

@@ -27,7 +27,7 @@
                         @endif
                     @break
                     @case('Ahorro mensual')
-                        <td>@if(count($salaries) > 0) <div class="iconsConfig floatLeft marginRight"><i class="fas fa-plus showSavings iconInherit"></i> <i class="fas fa-minus hideSavings iconInherit" style="display:none;"></i></div> @endif <div class="title floatLeft"><strong>{{ ucfirst($config->option) }} fijo</strong></div></td>
+                        <td>@if(count($salaries) > 0) <div class="iconsConfig floatLeft marginRight"><i class="fas fa-plus showSavings iconInherit" style="display:none;"></i> <i class="fas fa-minus hideSavings iconInherit"></i></div> @endif <div class="title floatLeft"><strong>{{ ucfirst($config->option) }} fijo</strong></div></td>
                         <td><a href="" class="updateCon" data-name="{{ $config->option }}" data-type="text" data-pk="{{$config->id}}" data-title="Edita la cuantía">{{ $config->value }}</a></td>
                     @break
                 @endswitch
@@ -45,7 +45,7 @@
     <div class="card-header">
         <div class="floatLeft">Ahorro mensual (modificado)</div> 
     </div>
-    <div class="card-body cardBodyConfig" style="display:none;">
+    <div class="card-body cardBodyConfig">
         <div class="marginSide">
             <table class="table">
                 <thead>
