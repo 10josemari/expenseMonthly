@@ -103,4 +103,33 @@
     </tbody>
 </table>
 <!-- Gastos/Ingresos detallados -->
+
+<!-- porcentajes individuales -->
+<table class="table">
+    <thead>
+        <tr>
+            <th colspan="3"><strong>Porcentajes de gastos</strong></th>
+        </tr>
+        <tr>
+            <th><strong>#</strong></th>
+            <th><strong>total</strong></th>
+            <th><strong>% individual</strong></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><i><strong>Ahorro mensual</strong></i></td>
+            <td><i><strong>{{$saveMonth}}€</strong></i></td>
+            <td><i><strong>{{getPercent($saveMonth,$totalMonth)}}%</strong></i></td>
+        </tr>
+        @foreach($percents as $percent)
+            <tr>
+            <td><i><strong>{{$percent->name}}</strong></i></td>
+            <td><i><strong>{{$percent->total}}€</strong></i></td>
+            <td><i><strong>{{getPercent($percent->total,$totalMonth)}}%</strong></i></td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
+<!-- porcentajes individuales -->
 @endsection

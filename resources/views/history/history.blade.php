@@ -18,7 +18,7 @@
             {{ $salary->links() }}
         @endif
     </div>
-    <div class="col-12 col-history marginTop"><strong><i>Selecciona un mes del menú de la izquierda</i></strong></div>
+    <div class="col-12 col-history marginTop"><strong><i>Selecciona un mes del menú superior</i></strong></div>
 </div>
 
 <!-- Js -->

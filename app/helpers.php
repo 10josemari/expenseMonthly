@@ -220,3 +220,10 @@ function getDateFormat($date){
 
     return $date." ".$hour;
 }
+
+/**
+ * Obtenemos el % respecto a un total
+ */
+function getPercent($value,$total){
+    return round(($value * 100) / $total,2);
+}
