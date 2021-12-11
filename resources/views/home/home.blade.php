@@ -8,11 +8,11 @@
     <div class="card-header">
             <div class="floatLeft">Resumen de gastos</div> 
             <div class="floatRight">
-                <i class="fas fa-compress fa-compress-home" style="display:none;"></i> 
-                <i class="fas fa-compress-arrows-alt fa-compress-arrows-alt-home"></i>
+                <i class="fas fa-compress fa-compress-home"></i> 
+                <i class="fas fa-compress-arrows-alt fa-compress-arrows-alt-home" style="display:none;"></i>
             </div>
     </div>
-    <div class="card-body carBodyHome">
+    <div class="card-body carBodyHome" style="display:none;">
         <!-- Salarios -->
         <table class="table">
             <tbody>

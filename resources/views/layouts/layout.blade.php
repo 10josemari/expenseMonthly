@@ -55,7 +55,7 @@
                               <a class="dropdown-item {{ setActive('expense') }}" href="{{ route('expense') }}"><i class="fas fa-coins"></i> Gastos mensuales</a>
                             </div>
                           </li>
-                          <li class="nav-item {{ setActive('category') }}"><a class="nav-link" href="{{ route('category') }}"><i class="fas fa-book"></i></i> Historial de gastos</a></li>
+                          <li class="nav-item {{ setActive('history') }}"><a class="nav-link" href="{{ route('history') }}"><i class="fas fa-book"></i></i> Historial de gastos</a></li>
                       </ul>
                       <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown">

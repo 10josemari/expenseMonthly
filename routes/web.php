@@ -102,3 +102,13 @@ Route::post('/deleteExpense', [App\Http\Controllers\FinancialActivityController:
 |
 */
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+
+/*
+|--------------------------------------------------------------------------
+| History
+|--------------------------------------------------------------------------
+|
+|
+*/
+Route::get('/history', [App\Http\Controllers\HomeController::class, 'indexHistory'])->name('history')->middleware('auth');
+Route::get('/showHistory', [App\Http\Controllers\HomeController::class, 'showHistory'])->name('showHistory');
