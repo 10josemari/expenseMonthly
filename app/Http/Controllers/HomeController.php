@@ -31,7 +31,7 @@ class HomeController extends Controller
      * Vista historial
      */
     public function indexHistory(){
-        $salary = Salary::select('*')->join('salary_bank', 'salary.id', '=', 'salary_bank.salary_id')->where('passed','=',1)->get();
+        $salary = Salary::select('*')->join('salary_bank', 'salary.id', '=', 'salary_bank.salary_id')->where('passed','=',1)->orderBy('salary.id', 'desc')->paginate(3);
         return view('history.history',compact('salary'));
     }
 
@@ -89,6 +89,10 @@ class HomeController extends Controller
 
         // GASTOS-INGRESOS
         $print .= '<table class="table">';
+        $print .= '<thead>';
+        $print .= '<tr><th colspan="3"><strong>Gastos detallados</strong></th></tr>';
+        $print .= '<tr><th><strong>#</strong></th><th><strong>tipo</strong></th><th><strong>Cuantía</strong></th></tr>';
+        $print .= '</thead>';
         $print .= '<tbody>';
         foreach($financialActivity as $financial){
             switch ($financial->type) {
