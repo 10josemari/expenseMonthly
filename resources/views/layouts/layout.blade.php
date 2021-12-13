@@ -37,7 +37,7 @@
     <!-- menu superior --> 
     <div class="container">
       <div class="row">
-          <div class="col-12">
+          <div class="col-12 marginTop">
               <nav class="navbar navbar-expand-lg navbar-light bg-light marginSideNavbar">
                   <a class="navbar-brand" href="{{ route('home') }}">Gastos mensuales</a>
                   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
