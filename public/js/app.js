@@ -2124,6 +2124,18 @@ var app = new Vue({
   el: '#app'
 });
 /**
+ * Layout
+ */
+
+$(".fa-caret-square-down").on('click', function (e) {
+  $(".fa-caret-square-up").css("display", "block");
+  $(".fa-caret-square-down").css("display", "none");
+});
+$(".fa-caret-square-up").on('click', function (e) {
+  $(".fa-caret-square-up").css("display", "none");
+  $(".fa-caret-square-down").css("display", "block");
+});
+/**
  * Vista Categoría
  */
 
