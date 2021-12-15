@@ -10019,6 +10019,10 @@ h3 {
     border-color: #dee2e6;
   }
 }
+.none {
+  display: none;
+}
+
 .marginTop {
   margin-top: 1em;
 }
@@ -10029,6 +10033,10 @@ h3 {
 
 .marginLeft {
   margin-left: 1em;
+}
+
+.paddingLeftImportant {
+  padding-left: 1em !important;
 }
 
 .marginRight {
@@ -10080,6 +10088,14 @@ h3 {
   color: #38c172;
 }
 
+.primary {
+  color: #5e3719;
+}
+
+.secondary {
+  color: #c8914a;
+}
+
 .btn-secondary {
   background-color: #721c24 !important;
   border-color: #721c24 !important;
@@ -10088,4 +10104,94 @@ h3 {
 .btn-secondary:hover, .btn-secondary:focus {
   background-color: #8b323b !important;
   border-color: #8b323b !important;
+}
+
+.colorPrimary, .colorPrimary:hover {
+  background-color: #5e3719;
+}
+
+.colorSecondary, .colorSecondary:hover {
+  background-color: #c8914a;
+}
+
+.colorTextWhite, .colorTextWhite:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.colorTextPrimary, .colorTextPrimary:hover {
+  color: #5e3719;
+  text-decoration: none;
+}
+
+.colorTextSecondary, .colorTextSecondary:hover {
+  color: #c8914a;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: #c8914a !important;
+  border-color: #c8914a !important;
+  color: #5e3719 !important;
+}
+
+.navbar-toggler {
+  padding: 0.25rem 0.75rem;
+  font-size: 1.125rem;
+  line-height: 1;
+  background-color: #5e3719 !important;
+  border: 1px solid #c8914a !important;
+  border-radius: 0.25rem;
+}
+
+.fa-caret-square-down, .fa-caret-square-up {
+  margin-top: 0.25em;
+  color: #c8914a;
+}
+
+.active {
+  background-color: #5e3719 !important;
+  border-radius: 2em;
+}
+
+.active > a {
+  color: #c8914a;
+}
+
+.active > a:hover {
+  color: #c8914a;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+  color: #c8914a;
+  text-decoration: none;
+}
+
+.page-item.active .page-link {
+  z-index: 3;
+  color: #5e3719;
+  background-color: #c8914a;
+  border-color: #c8914a;
+}
+
+.page-link {
+  position: relative;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #5e3719;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+}
+
+.editable-cancel, .editable-cancel:hover {
+  background-color: #721c24;
+  color: #fff;
+}
+
+.editable-click, a.editable-click, a.editable-click:hover {
+  text-decoration: none !important;
+  border-bottom: dashed 1px #5e3719 !important;
+  color: #5e3719 !important;
 }
