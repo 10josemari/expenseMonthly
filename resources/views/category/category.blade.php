@@ -5,13 +5,13 @@
 @section('body')
 <!--{{auth()->user()}}-->
 <!-- panel para insertar categorias -->
-<div class="card marginTop marginSide">
-    <div class="card-header">
-            <div class="floatLeft">Insertar categoría</div> 
-            <div class="floatRight">
-                <i class="fas fa-compress fa-compress-cat" style="display:none;"></i> 
-                <i class="fas fa-compress-arrows-alt fa-compress-arrows-alt-cat"></i>
-            </div>
+<div class="card marginTop">
+    <div class="card-header colorSecondary">
+        <div class="floatLeft primary">Insertar categoría</div> 
+        <div class="floatRight primary">
+            <i class="fas fa-compress fa-compress-cat" style="display:none;"></i> 
+            <i class="fas fa-compress-arrows-alt fa-compress-arrows-alt-cat"></i>
+        </div>
     </div>
     <div class="card-body cardBodyCategory">
         <form id="formAddCategory" action="/addCategory" method="POST">
@@ -26,21 +26,21 @@
             @if ($errors->get('description')) 
                 <small class="red">Error, debes rellenar el campo Descripción</small>    
             @endif
-            <button class="btn btn-info btn-block btn-addCategory marginTop" type="submit" id="marginTop">Añadir categoría</button>
+            <button class="btn btn-primary btn-block btn-addCategory marginTop" type="submit" id="marginTop">Añadir categoría <div class="spinner-addCategory floatRight none"><i class="fas fa-circle-notch fa-spin"></i></div></button>
         </form>
     </div>
 </div>
 <!-- panel para insertar categorias -->
 
-<hr class="marginSide">
+<hr>
 
 <!-- listado que muestra las categorías creadas -->
-<div class="marginSide">
+<div class="listCategoriesActives">
     <table class="table">
         <thead>
           <tr>
-            <th scope="col">Nombre</th>
-            <th scope="col">Descripción</th>
+            <th class="primary" scope="col">Nombre</th>
+            <th class="primary" scope="col">Descripción</th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -60,7 +60,7 @@
             @endforeach
         @else
             <tr>
-              <td class="textCenter" colspan="3">No hay categorías creadas</td>
+              <td class="textCenter primary" colspan="3">No hay categorías creadas</td>
             </tr>
         @endif
         </tbody>
@@ -74,12 +74,12 @@
 <!-- listado que muestra las categorías creadas -->
 
 <!-- listado que muestra las categorías desactivadas -->
-<div class="marginSide">
+<div class="listCategoriesInactives">
     <table class="table">
         <thead>
           <tr>
-            <th scope="col">Nombre</th>
-            <th scope="col">Descripción</th>
+            <th class="primary" scope="col">Nombre</th>
+            <th class="primary" scope="col">Descripción</th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -99,7 +99,7 @@
             @endforeach
         @else
             <tr>
-              <td class="textCenter" colspan="3">No hay categorías desactivadas</td>
+              <td class="textCenter primary" colspan="3">No hay categorías desactivadas</td>
             </tr>
         @endif
         </tbody>
@@ -119,6 +119,11 @@ $(document).ready(function(){
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
+    });
+
+    $(".btn-addCategory").on('click', function(e) {
+        //$(".btn-addCategory").prop('disabled', true);
+        $(".spinner-addCategory").css("display","block");
     });
 
     // Actualizamos campos de categorías

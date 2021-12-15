@@ -37,37 +37,44 @@
     <!-- menu superior --> 
     <div class="container">
       <div class="row">
-          <div class="col-12 marginTop">
-              <nav class="navbar navbar-expand-lg navbar-light bg-light marginSideNavbar">
-                  <a class="navbar-brand" href="{{ route('home') }}">Gastos mensuales</a>
-                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+          <div class="col-12">
+              <nav class="navbar navbar-expand-lg colorSecondary">
+                  <a class="navbar-brand colorTextPrimary" href="{{ route('home') }}">Gastos mensuales</a>
+                  <button class="navbar-toggler colorToggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon">
+                      <i class="far fa-caret-square-down"></i>
+                      <i class="far fa-caret-square-up none"></i>
+                    </span>
                   </button>
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                       <ul class="navbar-nav mr-auto">
-                          <li class="nav-item {{ setActive('home') }}"><a class="nav-link" href="{{ route('home') }}"><i class="fas fa-home"></i> Home</a></li>
-                          <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-plus"></i> Secciones</a>
+                          <li class="nav-item {{ setActive('home') }}"><a class="nav-link paddingLeftImportant colorTextPrimary" href="{{ route('home') }}"><i class="fas fa-home"></i> Página principal</a></li>
+                          <li class="nav-item {{ setActive('category') }}"><a class="nav-link paddingLeftImportant colorTextPrimary" href="{{ route('category') }}"><i class="fab fa-cuttlefish"></i> Categorías</a></li>
+                          <li class="nav-item {{ setActive('salary') }}"><a class="nav-link paddingLeftImportant colorTextPrimary" href="{{ route('salary') }}"><i class="fas fa-euro-sign"></i> Salarios</a></li>
+                          <li class="nav-item {{ setActive('income') }}"><a class="nav-link paddingLeftImportant colorTextPrimary" href="{{ route('income') }}"><i class="fas fa-comment-dollar"></i> Transferencias/Ingresos</a></li>
+                          <li class="nav-item {{ setActive('expense') }}"><a class="nav-link paddingLeftImportant colorTextPrimary" href="{{ route('expense') }}"><i class="fas fa-coins"></i> Gastos</a></li>
+                          <!--<li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle colorTextPrimary" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-plus"></i> Secciones</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                              <a class="dropdown-item {{ setActive('salary') }}" href="{{ route('salary') }}"><i class="fas fa-euro-sign"></i> Salarios</a>
-                              <a class="dropdown-item {{ setActive('income') }}" href="{{ route('income') }}"><i class="fas fa-comment-dollar"></i> Transferencias/Ingresos</a>
+                              <a class="dropdown-item {{ setActive('salary') }} colorTextPrimary" href="{{ route('salary') }}"><i class="fas fa-euro-sign"></i> Salarios</a>
+                              <a class="dropdown-item {{ setActive('income') }} colorTextPrimary" href="{{ route('income') }}"><i class="fas fa-comment-dollar"></i> Transferencias/Ingresos</a>
                               <div class="dropdown-divider"></div>
-                              <a class="dropdown-item {{ setActive('expense') }}" href="{{ route('expense') }}"><i class="fas fa-coins"></i> Gastos mensuales</a>
+                              <a class="dropdown-item {{ setActive('expense') }} colorTextPrimary" href="{{ route('expense') }}"><i class="fas fa-coins"></i> Gastos mensuales</a>
                             </div>
-                          </li>
-                          <li class="nav-item {{ setActive('history') }}"><a class="nav-link" href="{{ route('history') }}"><i class="fas fa-book"></i></i> Historial de gastos</a></li>
+                          </li>-->
+                          <li class="nav-item {{ setActive('history') }}"><a class="nav-link paddingLeftImportant colorTextPrimary" href="{{ route('history') }}"><i class="fas fa-book"></i></i> Historial</a></li>
                       </ul>
                       <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">{{auth()->user()->username}}</a>
+                            <a class="nav-link dropdown-toggle colorTextPrimary" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">{{auth()->user()->username}}</a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                              <a class="dropdown-item {{ setActive('config') }}" href="{{ route('config') }}"><i class="fas fa-cog"></i> Configuración</a>
-                              <a class="dropdown-item {{ setActive('category') }}" href="{{ route('category') }}"><i class="fab fa-cuttlefish"></i> Categorías</a>
-                              <a class="dropdown-item {{ setActive('piggyBank') }}" href="{{ route('piggyBank') }}"><i class="fas fa-piggy-bank"></i> Hucha</a>
+                              <a class="dropdown-item {{ setActive('config') }} colorTextPrimary" href="{{ route('config') }}"><i class="fas fa-cog"></i> Configuración</a>
+                              <!--<a class="dropdown-item {{ setActive('category') }}" href="{{ route('category') }}"><i class="fab fa-cuttlefish"></i> Categorías</a>-->
+                              <a class="dropdown-item {{ setActive('piggyBank') }} colorTextPrimary" href="{{ route('piggyBank') }}"><i class="fas fa-piggy-bank"></i> Hucha</a>
                               <div class="dropdown-divider"></div>
                               <form class="form-inline my-2 my-lg-0 marginLeft" action="/logout" method="POST">
                                 @csrf
-                                <button type="submit" class="btn btn-default"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</button>
+                                <button type="submit" class="btn btn-default"><i class="fas fa-sign-out-alt colorTextPrimary"></i> Cerrar sesión</button>
                               </form>
                             </div>
                           </li>

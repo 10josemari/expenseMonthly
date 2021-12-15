@@ -24,9 +24,9 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md colorSecondary">
             <div class="container">
-                <a class="navbar-brand" href="">Inicio de sesión<!--{{ config('app.name', 'Laravel') }}--></a>
+                <a class="navbar-brand colorTextPrimary" href="">Gastos Mensuales<!--{{ config('app.name', 'Laravel') }}--></a>
             </div>
         </nav>
 

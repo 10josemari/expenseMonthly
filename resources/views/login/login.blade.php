@@ -2,10 +2,10 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row row-login justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Inicio de sesión</div>
+                <div class="card-header colorSecondary colorTextPrimary">Inicio de sesión</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('validateCredentials') }}">
@@ -56,7 +56,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+                                <button type="submit" class="btn btn-lg btn-primary">Iniciar sesión</button>
                             </div>
                         </div>
                     </form>
