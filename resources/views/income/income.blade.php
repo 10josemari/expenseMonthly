@@ -4,10 +4,10 @@
 
 @section('body')
 <!-- panel de transferencias/ingresos -->
-<div class="card marginTop marginSide">
-    <div class="card-header">
-            <div class="floatLeft">Transferencias/Ingresos</div> 
-            <div class="floatRight">
+<div class="card marginTop">
+    <div class="card-header colorSecondary">
+            <div class="floatLeft primary">Transferencias/Ingresos</div> 
+            <div class="floatRight primary">
                 <i class="fas fa-compress fa-compress-income" style="display:none;"></i> 
                 <i class="fas fa-compress-arrows-alt fa-compress-arrows-alt-income"></i>
             </div>
@@ -35,22 +35,22 @@
             @if ($errors->get('income')) 
                 <small class="red">Error, debes rellenar el campo con formato decimal.</small>    
             @endif
-            <button class="btn btn-info btn-block btn-addIncome marginTop" type="submit" id="marginTop">Añadir transferencia/ingreso</button>
+            <button class="btn btn-primary btn-block btn-addIncome marginTop" type="submit" id="marginTop">Añadir transferencia/ingreso <div class="spinner-addIncome floatRight none"><i class="fas fa-circle-notch fa-spin"></i></div></button>
         </form>
     </div>
 </div>
 <!-- panel de transferencias/ingresos -->
 
-<hr class="marginSide">
+<hr>
 
 <!-- Panel de editar o eliminar transferencias/ingresos -->
-<div class="marginSide">
+<div>
     <table class="table">
         <thead>
           <tr>
-            <th scope="col">Acción ingreso</th>
-            <th scope="col">Valor</th>
-            <th scope="col"></th>
+            <th scope="col" class="primary">Acción ingreso</th>
+            <th scope="col" class="primary">Valor</th>
+            <th scope="col" class="primary"></th>
           </tr>
         </thead>
         <tbody>
@@ -69,7 +69,7 @@
             @endforeach
         @else
             <tr>
-              <td class="textCenter" colspan="3">No hay ingresos añadidos</td>
+              <td class="textCenter primary" colspan="3">No hay ingresos añadidos</td>
             </tr>
         @endif
         </tbody>
@@ -89,6 +89,11 @@ $(document).ready(function(){
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
+    });
+
+    $(".btn-addIncome").on('click', function(e) {
+        //$(".btn-addIncome").prop('disabled', true);
+        $(".spinner-addIncome").css("display","block");
     });
 
     // Actualizamos campos de categorías

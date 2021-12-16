@@ -6,7 +6,7 @@
 <!--{{auth()->user()}}-->
 
 <!-- BOTÓN PARA LIMPIAR TODO-->
-<div class="btnClean marginSide">
+<div class="btnClean marginTop">
     <form class="emptyPiggyBank" action="/cleanPiggyBank" method="POST">
         @csrf
         <a href="" data-toggle="cleanPiggyBank" data-question="¿Quieres reiniciar todos los valores introducidos?" data-id="8"><i class="fas fa-trash red"></i></a>
@@ -14,16 +14,16 @@
 </div>
 <!-- BOTÓN PARA LIMPIAR TODO-->
 
-<hr class="marginSide">
+<hr>
 
 <!-- panel de hucha -->
-<div class="card marginTop marginSide">
+<div class="card marginTop">
     <table class="table">
         <thead>
           <tr>
-            <th scope="col">Moneda</th>
-            <th scope="col">Cantidad</th>
-            <th scope="col">Total</th>
+            <th scope="col" class="primary">Moneda</th>
+            <th scope="col" class="primary">Cantidad</th>
+            <th scope="col" class="primary">Total</th>
           </tr>
         </thead>
         <tbody>
@@ -38,10 +38,10 @@
         @endforeach
         </tbody>
         <tfoot>
-            <tr style="background-color:#dee2e6;">
-                <td></td>
-                <td></td>
-                <td><strong>{{$a}}</strong>€</td>
+            <tr class="colorSecondary">
+                <td class="primary"></td>
+                <td class="primary"></td>
+                <td class="primary"><strong>{{$a}}</strong>€</td>
             </tr>
         </tfoot>
     </table>

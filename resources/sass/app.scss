@@ -86,6 +86,10 @@
     color: #c8914a;
 }
 
+.white{
+    color: #fff;
+}
+
 .btn-secondary{
     background-color: #721c24!important;
     border-color: #721c24!important;
@@ -126,6 +130,12 @@
     color:#5e3719!important;
 }
 
+.btn-primary-secondary{
+    background-color: #5e3719!important;
+    border-color: #5e3719!important;
+    color:#fff!important;
+}
+
 .navbar-toggler{
     padding: 0.25rem 0.75rem;
     font-size: 1.125rem;
@@ -141,6 +151,7 @@
     color: #c8914a;
 }
 
+// ACTIVE FOR MENU AND DROPDOWN
 .active{
     background-color: #5e3719!important;
     border-radius: 2em;
@@ -159,6 +170,7 @@
     text-decoration: none;
 }
 
+// PAGINATE
 .page-item.active .page-link {
     z-index: 3;
     color: #5e3719;
@@ -177,7 +189,7 @@
     border: 1px solid #dee2e6;
 }
 
-// Editable
+// EDITABLE
 .editable-cancel, .editable-cancel:hover{
     background-color: #721c24;
     color: #fff;
@@ -188,5 +200,3 @@
     border-bottom: dashed 1px #5e3719!important;
     color: #5e3719!important;
 }
-// #c8914a
-// #5e3719

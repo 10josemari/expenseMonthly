@@ -4,12 +4,12 @@
 
 @section('body')
 <!-- Configuración por defecto -->
-<div class="marginSide marginTop">
+<div class="marginTop">
     <table class="table">
         <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">Cuantía</th>
+            <th scope="col" class="primary">#</th>
+            <th scope="col" class="primary">Cuantía</th>
           </tr>
         </thead>
         <tbody>
@@ -41,18 +41,18 @@
 
 <!-- panel de ahorro mensual según el salario -->
 @if (count($salaries) > 0)
-<div class="card marginTop marginSide">
+<div class="card marginTop">
     <div class="card-header">
-        <div class="floatLeft">Ahorro mensual (modificado)</div> 
+        <div class="floatLeft primary">Ahorro mensual (permite modificar el mes actual)</div> 
     </div>
     <div class="card-body cardBodyConfig">
-        <div class="marginSide">
+        <div>
             <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">Mes-Año</th>
-                    <th scope="col">Cuantía</th>
-                    <th scope="col"></th>
+                    <th scope="col" class="primary">Mes-Año</th>
+                    <th scope="col" class="primary">Cuantía</th>
+                    <th scope="col" class="primary"></th>
                   </tr>
                 </thead>
                 <tbody>

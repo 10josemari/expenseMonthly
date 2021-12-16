@@ -4,10 +4,10 @@
 
 @section('body')
 <!-- panel para insertar salarios -->
-<div class="card marginTop marginSide cardAddSalary">
-    <div class="card-header cardAddSalary">
-            <div class="floatLeft">Salario mensual</div>
-            <div class="floatRight">
+<div class="card marginTop cardAddSalary">
+    <div class="card-header cardAddSalary colorSecondary">
+            <div class="floatLeft primary">Salario mensual</div>
+            <div class="floatRight primary">
                 <i class="fas fa-compress fa-compress-sal" style="display:none;"></i> 
                 <i class="fas fa-compress-arrows-alt fa-compress-arrows-alt-sal"></i>
             </div>
@@ -25,17 +25,17 @@
             @if ($errors->get('salary')) 
                 <small class="red">Error, debes rellenar el campo salario o el formato decimal introducido no es correcto</small>    
             @endif
-            <button class="btn btn-info btn-block btn-addSalary marginTop" type="submit" id="marginTop">Añadir salario</button>
+            <button class="btn btn-primary btn-block btn-addSalary marginTop" type="submit" id="marginTop">Añadir salario <div class="spinner-addSalary floatRight none"><i class="fas fa-circle-notch fa-spin"></i></div></button>
         </form>
     </div>
 </div>
 <!-- panel para insertar salarios -->
 
 <!-- panel para insertar salarios de un mes concreto -->
-<div class="card marginTop marginSide cardAddSalaryMonth" style="display:none;">
-    <div class="card-header cardAddSalaryMonth">
-        <div class="floatLeft">Salario mensual - mes concreto</div>
-        <div class="floatRight">
+<div class="card marginTop cardAddSalaryMonth" style="display:none;">
+    <div class="card-header cardAddSalaryMonth colorPrimary">
+        <div class="floatLeft white">Salario mensual - mes concreto</div>
+        <div class="floatRight white">
             <i class="fas fa-compress fa-compress-salMonth" style="display:none;"></i> 
             <i class="fas fa-compress-arrows-alt fa-compress-arrows-alt-salMonth"></i>
         </div>
@@ -55,24 +55,24 @@
             @if ($errors->get('salary')) 
                 <small class="red">Error, debes rellenar el campo salario o el formato decimal introducido no es correcto</small>    
             @endif
-            <button class="btn btn-info btn-block btn-addSalary marginTop" type="submit" id="marginTop">Añadir salario</button>
+            <button class="btn btn-primary-secondary btn-block btn-addSalary marginTop" type="submit" id="marginTop">Añadir salario <div class="spinner-addSalary floatRight none"><i class="fas fa-circle-notch fa-spin"></i></div></button>
         </form>
     </div>
 </div>
 <!-- panel para insertar salarios de un mes concreto -->
 
-<hr class="marginSide">
+<hr>
 
 <!-- panel para la visualización de salarios -->
-<div class="marginSide">
+<div>
     <table class="table">
         <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Sueldo</th>
-            <th scope="col">Mes-Año</th>
-            <th scope="col"></th>
+            <th scope="col" class="primary">#</th>
+            <th scope="col" class="primary">Nombre</th>
+            <th scope="col" class="primary">Sueldo</th>
+            <th scope="col" class="primary">Mes-Año</th>
+            <th scope="col" class="primary"></th>
           </tr>
         </thead>
         <tbody>
@@ -107,7 +107,7 @@
             @endforeach
         @else
             <tr>
-              <td class="textCenter" colspan="4">No hay salarios creados</td>
+              <td class="textCenter primary" colspan="4">No hay salarios creados</td>
             </tr>
         @endif
         </tbody>
@@ -127,6 +127,11 @@ $(document).ready(function(){
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
+    });
+
+    $(".btn-addSalary").on('click', function(e) {
+        //$(".btn-addSalary").prop('disabled', true);
+        $(".spinner-addSalary").css("display","block");
     });
 
     // Actualizamos campos de categorías

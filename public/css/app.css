@@ -10096,6 +10096,10 @@ h3 {
   color: #c8914a;
 }
 
+.white {
+  color: #fff;
+}
+
 .btn-secondary {
   background-color: #721c24 !important;
   border-color: #721c24 !important;
@@ -10133,6 +10137,12 @@ h3 {
   background-color: #c8914a !important;
   border-color: #c8914a !important;
   color: #5e3719 !important;
+}
+
+.btn-primary-secondary {
+  background-color: #5e3719 !important;
+  border-color: #5e3719 !important;
+  color: #fff !important;
 }
 
 .navbar-toggler {

@@ -1,13 +1,13 @@
 @extends('layouts.layout')
 
-@section('title','Gastos mensuales')
+@section('title','Gastos')
 
 @section('body')
 <!-- panel de gastos mensuales -->
-<div class="card marginTop marginSide">
-    <div class="card-header">
-            <div class="floatLeft">Gastos mensuales</div> 
-            <div class="floatRight">
+<div class="card marginTop">
+    <div class="card-header colorSecondary">
+            <div class="floatLeft primary">Gastos</div> 
+            <div class="floatRight primary">
                 <i class="fas fa-compress fa-compress-expense" style="display:none;"></i> 
                 <i class="fas fa-compress-arrows-alt fa-compress-arrows-alt-expense"></i>
             </div>
@@ -35,22 +35,22 @@
             @if ($errors->get('expense')) 
                 <small class="red">Error, debes rellenar el campo con formato decimal.</small>    
             @endif
-            <button class="btn btn-info btn-block btn-addExpense marginTop" type="submit" id="marginTop">Añadir gasto</button>
+            <button class="btn btn-primary btn-block btn-addExpense marginTop" type="submit" id="marginTop">Añadir gasto <div class="spinner-addExpense floatRight none"><i class="fas fa-circle-notch fa-spin"></i></div></button>
         </form>
     </div>
 </div>
 <!-- panel de gastos mensuales -->
 
-<hr class="marginSide">
+<hr>
 
 <!-- Panel de editar o eliminar gastos mensuales -->
-<div class="marginSide">
+<div>
     <table class="table">
         <thead>
           <tr>
-            <th scope="col">Acción gasto</th>
-            <th scope="col">Valor</th>
-            <th scope="col"></th>
+            <th scope="col" class="primary">Acción gasto</th>
+            <th scope="col" class="primary">Valor</th>
+            <th scope="col" class="primary"></th>
           </tr>
         </thead>
         <tbody>
@@ -69,7 +69,7 @@
             @endforeach
         @else
             <tr>
-              <td class="textCenter" colspan="3">No hay gastos añadidos</td>
+              <td class="textCenter primary" colspan="3">No hay gastos añadidos</td>
             </tr>
         @endif
         </tbody>
@@ -89,6 +89,11 @@ $(document).ready(function(){
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
+    });
+
+    $(".btn-addExpense").on('click', function(e) {
+        //$(".btn-addExpense").prop('disabled', true);
+        $(".spinner-addExpense").css("display","block");
     });
 
     // Actualizamos campos de categorías

@@ -32,6 +32,9 @@
     <!--jConfirm --> 
     <link rel="stylesheet" type="text/css" href="{{ url('css/jConfirm.min.css') }}">
     <script src="{{ asset('js/jConfirm.min.js') }}" defer></script>
+
+    <!-- manifest --> 
+    @laravelPWA
 </head>
 <body>
     <!-- menu superior --> 

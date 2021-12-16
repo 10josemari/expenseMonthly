@@ -3,10 +3,10 @@
 @section('title','Historial')
 
 @section('body')
-<div class="row marginTop marginSide">
+<div class="row marginTop">
     <div class="col-12 marginBottom">
-        <div class="floatLeft"></i><strong><i>Historial de gastos por meses</i></strong></div>
-        <div class="floatRight"><i class="fas fa-broom"></i></div>
+        <div class="floatLeft primary"></i><strong><i>Historial de gastos/ingresos, ahorros por meses</i></strong></div>
+        <div class="floatRight primary"><i class="fas fa-broom"></i></div>
     </div>
     <div class="col-12">
         <ul class="list-group">
@@ -18,7 +18,7 @@
             {{ $salary->links() }}
         @endif
     </div>
-    <div class="col-12 col-history marginTop"><strong><i>Selecciona un mes del menú superior</i></strong></div>
+    <div class="col-12 col-history marginTop primary"><strong><i>Selecciona un mes del menú superior</i></strong></div>
 </div>
 
 <!-- Js -->
