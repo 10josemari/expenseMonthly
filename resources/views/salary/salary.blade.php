@@ -6,11 +6,11 @@
 <!-- panel para insertar salarios -->
 <div class="card marginTop cardAddSalary">
     <div class="card-header cardAddSalary colorSecondary">
-            <div class="floatLeft primary">Salario mensual</div>
-            <div class="floatRight primary">
-                <i class="fas fa-compress fa-compress-sal" style="display:none;"></i> 
-                <i class="fas fa-compress-arrows-alt fa-compress-arrows-alt-sal"></i>
-            </div>
+        <div class="floatLeft primary">Salario mensual</div>
+        <div class="floatRight primary">
+            <i class="fas fa-compress fa-compress-sal" style="display:none;"></i>
+            <i class="fas fa-compress-arrows-alt fa-compress-arrows-alt-sal"></i>
+        </div>
     </div>
     <div class="card-body cardBodySalary">
         <form id="formAddSalary" action="/addSalary" method="POST">
@@ -87,7 +87,7 @@
                         <i class="fas fa-ban"></i>
                     @endif
                 </td>
-                @if(comprobateDate($salary->month,$salary->year))
+                @if($salary->passed == 0)
                     <td class="textLeft"><a href="" class="updateSal" data-name="name" data-type="text" data-pk="{{$salary->id}}" data-title="Edita el nombre">{{ $salary->name }}</a></td>
                     <td class="textLeft"><a href="" class="updateSal" data-name="amount" data-type="text" data-pk="{{$salary->id}}" data-title="Edita el sueldo">{{ $salary->amount }}</a></td>
                     <td><strong>{{ getMonth($salary->month) }} - {{ $salary->year }} / {{ getNextMonthTitle($salary->month) }}</strong></td>
