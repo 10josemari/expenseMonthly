@@ -38,7 +38,7 @@ class FinancialActivityController extends Controller
             'category' => 'required',
             'income' => 'required|numeric',
         ]);
-        $salary = Salary::select('*')->where('month','=',date('m'))->where('year','=',date('Y'))->orderBy('id', 'desc')->get();
+        $salary = Salary::select('*')->where('passed','=',0)->orderBy('id', 'desc')->get();
         if(count($salary) > 0){
             $salaryBank = SalaryBank::select('*')->where('salary_id','=',$salary[0]['id'])->get();
             $newTotal = $salaryBank[0]['bank_now_total'] + request()->income;

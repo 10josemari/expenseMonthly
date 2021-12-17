@@ -42,7 +42,7 @@
       <div class="row">
           <div class="col-12">
               <nav class="navbar navbar-expand-lg colorSecondary">
-                  <a class="navbar-brand colorTextPrimary" href="{{ route('home') }}">Gastos mensuales</a>
+                  <a class="navbar-brand colorTextPrimary" href="{{ route('home') }}"><img src="{{ asset('img/logo.png') }}" height="40" width="40" alt=""></a>
                   <button class="navbar-toggler colorToggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon">
                       <i class="far fa-caret-square-down"></i>

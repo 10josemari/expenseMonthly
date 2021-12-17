@@ -19,6 +19,9 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/ico" href="{{ asset('img/favicon.ico') }}" />
+
     <!-- manifest --> 
     @laravelPWA
 </head>
@@ -26,7 +29,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md colorSecondary">
             <div class="container">
-                <a class="navbar-brand colorTextPrimary" href="">Gastos Mensuales<!--{{ config('app.name', 'Laravel') }}--></a>
+                <a class="navbar-brand colorTextPrimary" href=""></a>
             </div>
         </nav>
 

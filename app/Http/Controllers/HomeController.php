@@ -23,7 +23,7 @@ class HomeController extends Controller
         $expenses = FinancialActivity::where('salary_id','=',$salary[0]['id'])->where('type','=','expense')->sum('value');
         $incomes = FinancialActivity::where('salary_id','=',$salary[0]['id'])->where('type','=','income')->sum('value');
         $financialActivity = FinancialActivity::select('financial_activity.type','financial_activity.nameAction','financial_activity.created_at','financial_activity.value','category.name')->join('category','financial_activity.category_id','=','category.id')->where('salary_id','=',$salary[0]['id'])->orderBy('financial_activity.created_at', 'asc')->get();
-        $percents = FinancialActivity::select("category.name", DB::raw("SUM(value) as total"))->where('salary_id','=',$salary[0]['id'])->where('type','=','expense')->join('category','financial_activity.category_id','=','category.id')->groupBy('category_id')->orderByRaw('category.name ASC')->get();
+        $percents = FinancialActivity::select("category.name", DB::raw("SUM(value) as total"))->where('salary_id','=',$salary[0]['id'])->where('type','=','expense')->join('category','financial_activity.category_id','=','category.id')->groupBy('category_id')->orderByRaw('total DESC')->get();
         $totalMonth = $salary[0]['money'] + $incomes;
         $saveMonth = $salary[0]['saveMonthly'] + ($salary[0]['bank_now_total'] - $salary[0]['bank_adding_savings']);
 
@@ -47,7 +47,7 @@ class HomeController extends Controller
         $expenses = FinancialActivity::where('salary_id','=',$request->id)->where('type','=','expense')->sum('value');
         $incomes = FinancialActivity::where('salary_id','=',$request->id)->where('type','=','income')->sum('value');
         $financialActivity = FinancialActivity::select('financial_activity.type','financial_activity.nameAction','financial_activity.created_at','financial_activity.value','category.name','financial_activity.month','financial_activity.year')->join('category','financial_activity.category_id','=','category.id')->where('salary_id','=',$request->id)->orderBy('financial_activity.created_at', 'asc')->get();
-        $percents = FinancialActivity::select("category.name", DB::raw("SUM(value) as total"))->where('salary_id','=',$request->id)->where('type','=','expense')->join('category','financial_activity.category_id','=','category.id')->groupBy('category_id')->orderByRaw('category.name ASC')->get();
+        $percents = FinancialActivity::select("category.name", DB::raw("SUM(value) as total"))->where('salary_id','=',$request->id)->where('type','=','expense')->join('category','financial_activity.category_id','=','category.id')->groupBy('category_id')->orderByRaw('total DESC')->get();
         
         // Pintamos la información de salida. Para ello a iremos almacenando en una variable
         $print = '<div class="card">';
@@ -63,8 +63,8 @@ class HomeController extends Controller
         $print .= '<tbody>';
         foreach($salaries as $infoSalaries){
             $print .= '<tr>';
-            $print .= '<td><i><strong>'.$infoSalaries->name.'</strong></i> (<i>'.$infoSalaries->amount.'€</i>)</td>';
-            $print .= '<td><i><strong>'.getDateFormat($infoSalaries->created_at).'</strong></i></td>';
+            $print .= '<td><i class="primary"><strong>'.$infoSalaries->name.'</strong></i> (<i class="secondary">'.$infoSalaries->amount.'€</i>)</td>';
+            $print .= '<td><i class="primary"><strong>'.getDateFormat($infoSalaries->created_at).'</strong></i></td>';
             $print .= '</tr>';
         }
         $print .= '</tbody>';

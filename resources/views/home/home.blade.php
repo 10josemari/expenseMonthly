@@ -4,13 +4,13 @@
 
 @section('body')
 <!-- panel de información de ahorro -->
-<div class="card marginTop marginSide">
-    <div class="card-header">
-            <div class="floatLeft">Resumen de gastos</div> 
-            <div class="floatRight">
-                <i class="fas fa-compress fa-compress-home" style="display:none;"></i>
-                <i class="fas fa-compress-arrows-alt fa-compress-arrows-alt-home"></i>
-            </div>
+<div class="card marginTop">
+    <div class="card-header colorSecondary">
+        <div class="floatLeft primary">Resumen</div> 
+        <div class="floatRight primary">
+            <i class="fas fa-compress fa-compress-home" style="display:none;"></i>
+            <i class="fas fa-compress-arrows-alt fa-compress-arrows-alt-home"></i>
+        </div>
     </div>
     <div class="card-body carBodyHome">
         <!-- Salarios -->
@@ -18,8 +18,8 @@
             <tbody>
             @foreach($salaries as $infoSalaries)
             <tr>
-                <td><i><strong>{{$infoSalaries->name}}</strong></i> (<i>{{$infoSalaries->amount}}€</i>)</td>
-                <td><i><strong>{{getDateFormat($infoSalaries->created_at)}}</strong></i></td>
+                <td><i class="primary"><strong>{{$infoSalaries->name}}</strong></i> (<i class="secondary">{{$infoSalaries->amount}}€</i>)</td>
+                <td><i class="primary"><strong>{{getDateFormat($infoSalaries->created_at)}}</strong></i></td>
             </tr>
             @endforeach
             </tbody>
