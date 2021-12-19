@@ -153,3 +153,7 @@ $(".btn-login").on('click', function(e) {
     //$(".btn-addCategory").prop('disabled', true);
     $(".spinner-login").css("display","block");
 });
+
+$(".nav-btn").on('click', function(e) {
+    $(".col-body").addClass("disabledBody");
+});

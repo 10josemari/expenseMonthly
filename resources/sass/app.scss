@@ -8,6 +8,11 @@
 @import '~bootstrap/scss/bootstrap';
 
 // CSS que se usara en todos los archivos
+.disabledBody{
+    pointer-events: none;
+    opacity: 0.4;
+}
+
 .none{
     display: none;
 }
