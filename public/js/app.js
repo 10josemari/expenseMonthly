@@ -2229,6 +2229,14 @@ $(".fa-compress-arrows-alt-expense").on('click', function (e) {
   $(".fa-compress-arrows-alt-expense").css('display', 'none');
   $(".fa-compress-expense").css('display', 'block');
 });
+/**
+ * Vista Login
+ */
+
+$(".btn-login").on('click', function (e) {
+  //$(".btn-addCategory").prop('disabled', true);
+  $(".spinner-login").css("display", "block");
+});
 
 /***/ }),
 
