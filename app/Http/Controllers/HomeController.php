@@ -23,7 +23,7 @@ class HomeController extends Controller
         $expenses = FinancialActivity::where('salary_id','=',$salary[0]['id'])->where('type','=','expense')->sum('value');
         $incomes = FinancialActivity::where('salary_id','=',$salary[0]['id'])->where('type','=','income')->sum('value');
         $financialActivity = FinancialActivity::select('financial_activity.type','financial_activity.nameAction','financial_activity.created_at','financial_activity.value','category.name')->join('category','financial_activity.category_id','=','category.id')->where('salary_id','=',$salary[0]['id'])->orderBy('financial_activity.created_at', 'asc')->get();
-        $percents = FinancialActivity::select("category.name", DB::raw("SUM(value) as total"))->where('salary_id','=',$salary[0]['id'])->where('type','=','expense')->join('category','financial_activity.category_id','=','category.id')->groupBy('category_id')->orderByRaw('total DESC')->get();
+        $percents = FinancialActivity::select("category.name", DB::raw("SUM(value) as total"))->where('salary_id','=',$salary[0]['id'])->where('type','=','expense')->join('category','financial_activity.category_id','=','category.id')->groupBy('category.name')->orderByRaw('total DESC')->get();
         $totalMonth = $salary[0]['money'] + $incomes;
         $saveMonth = $salary[0]['saveMonthly'] + ($salary[0]['bank_now_total'] - $salary[0]['bank_adding_savings']);
 
@@ -47,7 +47,7 @@ class HomeController extends Controller
         $expenses = FinancialActivity::where('salary_id','=',$request->id)->where('type','=','expense')->sum('value');
         $incomes = FinancialActivity::where('salary_id','=',$request->id)->where('type','=','income')->sum('value');
         $financialActivity = FinancialActivity::select('financial_activity.type','financial_activity.nameAction','financial_activity.created_at','financial_activity.value','category.name','financial_activity.month','financial_activity.year')->join('category','financial_activity.category_id','=','category.id')->where('salary_id','=',$request->id)->orderBy('financial_activity.created_at', 'asc')->get();
-        $percents = FinancialActivity::select("category.name", DB::raw("SUM(value) as total"))->where('salary_id','=',$request->id)->where('type','=','expense')->join('category','financial_activity.category_id','=','category.id')->groupBy('category_id')->orderByRaw('total DESC')->get();
+        $percents = FinancialActivity::select("category.name", DB::raw("SUM(value) as total"))->where('salary_id','=',$request->id)->where('type','=','expense')->join('category','financial_activity.category_id','=','category.id')->groupBy('category.name')->orderByRaw('total DESC')->get();
         
         // Pintamos la información de salida. Para ello a iremos almacenando en una variable
         $print = '<div class="card">';
@@ -78,6 +78,10 @@ class HomeController extends Controller
             $totalMonth = $infoSalary->money + $incomes;
 
             $print .= '<tr><td colspan="2" style="color:#0c5460;"><i>Suma de salarios</i> <strong><i>'.$infoSalary->money.'€</i></strong></td></tr>';
+            if($incomes > 0){
+                $totalIncomes = $infoSalary->money + $incomes;
+                $print .= '<tr><td colspan="2" style="color:#0c5460;"><i>Suma de salarios (sumando ingresos)</i> <strong><i>'.$totalIncomes.'€</i></strong></td></tr>';
+            }
             $print .= '<tr><td style="color:#856404;"><i>Ahorro mensual fijo</i> <strong><i>'.$infoSalary->saveMonthly.'€</i></strong></td><td style="color:#78a057;"><i>Ahorro mensual total</i> <strong><i>'.$saveTotal.'€</i></strong></td></tr>';
             $print .= '<tr><td style="color:#448d8b;"><i>Inicio de mes </i> <strong><i>'.$infoSalary->bank_previous_month.'€</i></strong></td><td style="color:#448d8b;"><i>Ahorro mes finalizado (sumando ahorro mensual total)</i> <strong><i>'.$infoSalary->bank_now_total.'€</i></strong></td></tr>';
             $print .= '<tr><td style="color:#448d8b;"><i>El banco no bajó de...</i> <strong><i>'.$infoSalary->bank_adding_savings.'€</i></strong></td><td style="color:#b38c2d;"><i>Este mes ha sobrado...</i> <strong><i>'.round(($infoSalary->bank_now_total - $infoSalary->bank_adding_savings),2).'€</i></strong></td></tr>';

@@ -32,6 +32,11 @@
             <tr>
                 <td colspan="2" style="color:#0c5460;"><i>Suma de salarios</i> <strong><i>{{$infoSalary->money}}€</i></strong></td>
             </tr>
+            @if($incomes > 0)
+            <tr>
+                <td colspan="2" style="color:#0c5460;"><i>Suma de salarios (sumando ingresos)</i> <strong><i>{{$infoSalary->money + $incomes}}€</i></strong></td>
+            </tr>
+            @endif
             <tr>
                 <td style="color:#856404;"><i>Ahorro mensual fijo</i> <strong><i>{{$infoSalary->saveMonthly}}€</i></strong></td>
                 <td style="color:#78a057;"><i>Ahorro mensual total</i> <strong><i>{{$infoSalary->saveMonthly + ($infoSalary->bank_now_total - $infoSalary->bank_adding_savings)}}€</i></strong></td>
