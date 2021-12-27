@@ -20,7 +20,8 @@ class ConfigController extends Controller
     public function index(){
         $configs = Config::select('*')->get();
         $salaries = Salary::select('*')->orderBy('id', 'desc')->get();
-        return view('config.config', compact('configs','salaries'));
+        $saveTotal = Salary::sum('saveMonthly');
+        return view('config.config', compact('configs','salaries','saveTotal'));
     }
 
     /**

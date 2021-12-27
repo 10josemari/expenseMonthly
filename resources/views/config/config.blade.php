@@ -34,6 +34,10 @@
             </tr>
             @endforeach
         @endif
+        <tr>
+            <td class="primary"><strong>Ahorro total (suma de todos los meses)</strong></td>
+            <td class="primary"><strong>{{ $saveTotal }}€</strong></td> 
+        </tr>
         </tbody>
     </table>
 </div>
