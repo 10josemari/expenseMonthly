@@ -90,7 +90,7 @@
                 @if($salary->passed == 0)
                     <td class="textLeft"><a href="" class="updateSal" data-name="name" data-type="text" data-pk="{{$salary->id}}" data-title="Edita el nombre">{{ $salary->name }}</a></td>
                     <td class="textLeft"><a href="" class="updateSal" data-name="amount" data-type="text" data-pk="{{$salary->id}}" data-title="Edita el sueldo">{{ $salary->amount }}</a></td>
-                    <td><strong>{{ getMonth($salary->month) }} - {{ $salary->year }} / {{ getNextMonthTitle($salary->month) }}</strong></td>
+                    <td><strong>{{ getMonth($salary->month) }} - {{ $salary->year }} / {{ getNextMonthTitle($salary->month) }} - {{ getNextYear($salary->month,$salary->year) }}</strong></td>
                     <td>
                         <form class="delSalary" action="/deleteSalary" method="POST">
                             @csrf
@@ -100,7 +100,7 @@
                 @else
                     <td class="textLeft">{{ $salary->name }}</td>
                     <td class="textLeft">{{ $salary->amount }}</td>
-                    <td><strong>{{ getMonth($salary->month) }} - {{ $salary->year }} / {{ getNextMonthTitle($salary->month) }}</strong></td>
+                    <td><strong>{{ getMonth($salary->month) }} - {{ $salary->year }} / {{ getNextMonthTitle($salary->month) }} - {{ getNextYear($salary->month,$salary->year) }}</strong></td>
                     <td></td>
                 @endif
             </tr>
