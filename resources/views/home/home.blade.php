@@ -34,7 +34,7 @@
             </tr>
             @if($incomes > 0)
             <tr>
-                <td colspan="2" style="color:#0c5460;"><i>Suma de salarios (sumando ingresos)</i> <strong><i>{{$infoSalary->money + $incomes}}€</i></strong></td>
+                <td colspan="2" style="color:#0c5460;"><i>Suma de salarios (salarios + ingresos)</i> <strong><i>{{$infoSalary->money + $incomes}}€</i></strong></td>
             </tr>
             @endif
             <tr>
@@ -58,7 +58,7 @@
             <tbody>
                 <tr>
                     <td style="color:#155724;"><i>Ingresos mensuales</i> <strong><i>{{$incomes}}€</i></strong></td>
-                    <td style="color:#721c24;"><i>Gastos menuales</i> <strong><i>{{$expenses}}€</i></strong></td>
+                    <td style="color:#721c24;"><i>Gastos mensuales</i> <strong><i>{{$expenses}}€</i></strong></td>
                 </tr>
             </tbody>
         </table>
