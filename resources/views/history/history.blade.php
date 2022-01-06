@@ -11,7 +11,7 @@
     <div class="col-12">
         <ul class="list-group">
         @foreach($salary as $infoSalary)
-            <li class="list-group-item li-item" data-pk="{{$infoSalary->id}}"><strong><i>{{getMonth($infoSalary->month)}} - {{$infoSalary->year}} / {{getNextMonthTitle($infoSalary->month)}}</i></strong></li>
+            <li class="list-group-item li-item" data-pk="{{$infoSalary->id}}"><strong><i>{{getMonth($infoSalary->month)}} - {{$infoSalary->year}} / {{ getNextMonthTitle($infoSalary->month) }} - {{ getNextYear($infoSalary->month,$infoSalary->year) }}</i></strong></li>
         @endforeach
         </ul>
         @if (count($salary) > 0)
