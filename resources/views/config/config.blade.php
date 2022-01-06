@@ -34,10 +34,12 @@
             </tr>
             @endforeach
         @endif
+        @if ($saveTotal != 0)
         <tr>
-            <td class="primary"><strong>Ahorro total (suma de todos los meses)</strong></td>
-            <td class="primary"><strong>{{ $saveTotal }}€</strong></td> 
+            <td><strong><i>Ahorro total</i></strong></td>
+            <td><strong><i>{{ $saveTotal }}€</i></strong></td>
         </tr>
+        @endif
         </tbody>
     </table>
 </div>
@@ -64,12 +66,12 @@
                     @foreach ($salaries as $salary)
                         @if($salary->passed == 0)
                             <tr>
-                                <td><strong>{{ getMonth($salary->month) }} - {{ $salary->year }} / {{ getNextMonthTitle($salary->month) }}</strong></td>
+                                <td><strong>{{ getMonth($salary->month) }} - {{ $salary->year }} / {{ getNextMonthTitle($salary->month) }} - {{ getNextYear($salary->month,$salary->year) }}</strong></td>
                                 <td><a href="" class="updateSav" data-name="{{ getMonth($salary->month) }} - {{ $salary->year }}" data-type="text" data-pk="{{$salary->id}}" data-month="{{ $salary->month }}" data-title="Edita la cuantía">{{ $salary->saveMonthly }}</a></td>
                             </tr>
                         @else
                             <tr>
-                                <td><strong>{{ getMonth($salary->month) }} - {{ $salary->year }} / {{ getNextMonthTitle($salary->month) }}</strong></td>
+                                <td><strong>{{ getMonth($salary->month) }} - {{ $salary->year }} / {{ getNextMonthTitle($salary->month) }} - {{ getNextYear($salary->month,$salary->year) }}</strong></td>
                                 <td>{{ $salary->saveMonthly }}</td>
                             </tr>
                         @endif
