@@ -154,4 +154,70 @@ class HomeController extends Controller
         $print .= '</div>';
         return $print;
     }
+
+    /**
+    * Buscador
+    */
+    public function indexSearch(){
+        // return view('home.home',compact('salary','salaries','expenses','incomes','financialActivity','percents','totalMonth','saveMonth'));
+        return view('search.search');
+    }
+
+    /**
+    * Buscador con filtro
+    */
+    public function searchFilter(Request $request){
+        $financialActivity = FinancialActivity::select('financial_activity.type','financial_activity.nameAction','financial_activity.created_at','financial_activity.value','category.name','financial_activity.month','financial_activity.year')->join('category','financial_activity.category_id','=','category.id')->where('nameAction','like','%'.$request->value.'%')->where('type','=',"expense")->orderBy('financial_activity.created_at', 'asc')->get();
+        $total = 0;
+
+        // Pintamos la información de salida. Para ello a iremos almacenando en una variable
+        $print = '<div class="card">';
+        $print .= '<div class="card-header">';
+        $print .= '<div class="floatLeft"><strong>Gastos Filtrados</strong></div>';
+        $print .= '</div>';
+        $print .= '</div>';
+
+        $print .= '<div class="card-body">';
+
+        //GASTOS FILTRADOS
+        $print .= '<table class="table">';
+        $print .= '<thead>';
+        $print .= '<tr><th><strong>#</strong></th><th><strong>tipo</strong></th><th><strong>Cuantía</strong></th></tr>';
+        $print .= '</thead>';
+        $print .= '<tbody>';
+        foreach($financialActivity as $financial){
+            switch ($financial->type) {
+                case 'income':
+                    $print .= '<tr style="color:#155724;">';
+                    $print .= '<td><i><strong>'.$financial->nameAction.' <br> <small>'.getDateFormat($financial->created_at).'</small> </strong></i></td>';
+                    $print .= '<td><i><strong>Ingreso</strong></i><br><small>'.$financial->name.'</small></td>';
+                    $print .= '<td><i><strong>'.$financial->value.'€</strong></i></td>';
+                    $print .= '</tr>';
+                break;
+                case 'expense':
+                    $print .= '<tr style="color:#721c24;">';
+                    $print .= '<td><i><strong>'.$financial->nameAction.' <br> <small>'.getDateFormat($financial->created_at).'</small></strong></i></td>';
+                    $print .= '<td><i><strong>Gasto</strong></i><br><small>'.$financial->name.'</small></td>';
+                    $print .= '<td><i><strong>'.$financial->value.'€</strong></i></td>';
+                    $print .= '</tr>';
+                break;
+            }
+            // Vamos sumando el total
+            $total = round($total + $financial->value,2);
+        }
+
+        if($total != 0){
+            $print .= '<tr>';
+            $print .= '<td colspan="2"><i><strong>Total</strong></i></td>';
+            $print .= '<td><i><strong>'.$total.'€</strong></i></td>';
+            $print .= '</tr>';
+        }
+
+        $print .= '</tbody>';
+        $print .= '</table>';
+
+        $print .= '</div>';
+        return $print;
+
+    }
 }
