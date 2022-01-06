@@ -9,6 +9,16 @@ use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
 
+/**
+* Ruta para limpiar cache. Siempre que se quiera limpir, hay que descomentar y lanzar
+*/
+Route::get('/clear-cache', function () {
+   echo Artisan::call('config:clear');
+   echo Artisan::call('config:cache');
+   echo Artisan::call('cache:clear');
+   echo Artisan::call('route:clear');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Login (OK)
@@ -112,3 +122,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 */
 Route::get('/history', [App\Http\Controllers\HomeController::class, 'indexHistory'])->name('history')->middleware('auth');
 Route::get('/showHistory', [App\Http\Controllers\HomeController::class, 'showHistory'])->name('showHistory');
+
+/*
+|--------------------------------------------------------------------------
+| Search
+|--------------------------------------------------------------------------
+|
+|
+*/
+Route::get('/search', [App\Http\Controllers\HomeController::class, 'indexSearch'])->name('search')->middleware('auth');
+Route::get('/searchFilter', [App\Http\Controllers\HomeController::class, 'searchFilter'])->name('searchFilter')->middleware('auth');
