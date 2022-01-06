@@ -21,6 +21,12 @@ class ConfigController extends Controller
         $configs = Config::select('*')->get();
         $salaries = Salary::select('*')->orderBy('id', 'desc')->get();
         $saveTotal = Salary::sum('saveMonthly');
+        $infoSalary = SalaryBank::select('*')->orderBy('id', 'desc')->get();
+        foreach($infoSalary as $info){
+            $total = $info->bank_now_total - $info->bank_adding_savings;
+            $saveTotal = $saveTotal + $total;
+        }
+
         return view('config.config', compact('configs','salaries','saveTotal'));
     }
 
