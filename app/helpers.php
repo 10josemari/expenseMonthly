@@ -69,42 +69,41 @@ function getMonth($month){
 function getNextMonthTitle($month){
     switch ($month) {
         case '01':
-            return getMonth($month+1)." - ".date('Y');
+            return getMonth($month+1);
         break;
         case '02':
-            return getMonth($month+1)." - ".date('Y');
+            return getMonth($month+1);
         break;
         case '03':
-            return getMonth($month+1)." - ".date('Y');
+            return getMonth($month+1);
         break;
         case '04':
-            return getMonth($month+1)." - ".date('Y');
+            return getMonth($month+1);
         break;
         case '05':
-            return getMonth($month+1)." - ".date('Y');
+            return getMonth($month+1);
         break;
         case '06':
-            return getMonth($month+1)." - ".date('Y');
+            return getMonth($month+1);
         break;
         case '07':
-            return getMonth($month+1)." - ".date('Y');
+            return getMonth($month+1);
         break;
         case '08':
-            return getMonth($month+1)." - ".date('Y');
+            return getMonth($month+1);
         break;
         case '09':
-            return getMonth($month+1)." - ".date('Y');
+            return getMonth($month+1);
         break;
         case '10':
-            return getMonth($month+1)." - ".date('Y');
+            return getMonth($month+1);
         break;
         case '11':
-            return getMonth($month+1)." - ".date('Y');
+            return getMonth($month+1);
         break;
         case '12':
             $month = "01";
-            $year = date('Y')+1;
-            return getMonth($month)." - ".$year;
+            return getMonth($month);
         break;
     }
 }
@@ -199,6 +198,18 @@ function getNextMonth($month){
             return $month." - ".$year;
         break;
     }
+}
+
+/**
+ * Retornamos el nombre del mes siguiente al pasado
+ */
+function getNextYear($month,$year){
+    switch ($month) {
+        case '12':
+            $year = $year + 1;
+        break;
+    }
+    return $year;
 }
 
 /**
