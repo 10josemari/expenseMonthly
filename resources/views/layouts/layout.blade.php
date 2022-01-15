@@ -54,8 +54,8 @@
                           <li class="nav-item {{ setActive('home') }} nav-btn"><a class="nav-link paddingLeftImportant colorTextPrimary" href="{{ route('home') }}"><i class="fas fa-home"></i> Página principal</a></li>
                           <li class="nav-item {{ setActive('category') }} nav-btn"><a class="nav-link paddingLeftImportant colorTextPrimary" href="{{ route('category') }}"><i class="fab fa-cuttlefish"></i> Categorías</a></li>
                           <li class="nav-item {{ setActive('salary') }} nav-btn"><a class="nav-link paddingLeftImportant colorTextPrimary" href="{{ route('salary') }}"><i class="fas fa-euro-sign"></i> Salarios</a></li>
-                          <li class="nav-item {{ setActive('income') }} nav-btn"><a class="nav-link paddingLeftImportant colorTextPrimary" href="{{ route('income') }}"><i class="fas fa-comment-dollar"></i> Transferencias/Ingresos</a></li>
                           <li class="nav-item {{ setActive('expense') }} nav-btn"><a class="nav-link paddingLeftImportant colorTextPrimary" href="{{ route('expense') }}"><i class="fas fa-coins"></i> Gastos</a></li>
+                          <li class="nav-item {{ setActive('income') }} nav-btn"><a class="nav-link paddingLeftImportant colorTextPrimary" href="{{ route('income') }}"><i class="fas fa-comment-dollar"></i> Transferencias/Ingresos</a></li>
                           <!--<li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle colorTextPrimary" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-plus"></i> Secciones</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -66,6 +66,7 @@
                             </div>
                           </li>-->
                           <li class="nav-item {{ setActive('history') }} nav-btn"><a class="nav-link paddingLeftImportant colorTextPrimary" href="{{ route('history') }}"><i class="fas fa-book"></i></i> Historial</a></li>
+                          <li class="nav-item {{ setActive('search') }} nav-btn"><a class="nav-link paddingLeftImportant colorTextPrimary" href="{{ route('search') }}"><i class="fas fa-search"></i></i> Buscador</a></li>
                       </ul>
                       <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown">
