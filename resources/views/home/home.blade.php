@@ -30,25 +30,42 @@
             <tbody>
             @foreach($salary as $infoSalary)
             <tr>
-                <td colspan="2" style="color:#0c5460;"><i>Suma de salarios</i> <strong><i>{{$infoSalary->money}}€</i></strong></td>
+                <td colspan="2" style="color:#0c5460;">
+                    <i>Suma de salarios</i> <strong><i>{{$infoSalary->money}}€</i></strong> <i>@if($incomes > 0) ( {{$infoSalary->money + $incomes}}€ ) @endif</i> 
+                </td>
             </tr>
-            @if($incomes > 0)
             <tr>
-                <td colspan="2" style="color:#0c5460;"><i>Suma de salarios (salarios + ingresos)</i> <strong><i>{{$infoSalary->money + $incomes}}€</i></strong></td>
+                <td colspan="2" style="color:#3B0468;"><i>El ahorro total se quedó el mes anterior en..</i> <strong><i>{{$infoSalary->bank_previous_month}}€</i></strong></td>
             </tr>
+            <tr>
+                <td colspan="2" style="color:#03857F;"><i>Ahorro mensual fijo...</i> <strong><i>{{$infoSalary->saveMonthly}}€</i></strong></td>
+            </tr>
+            @if(count($salarySubtractedTotal) == 0)
+                <tr>
+                    <td colspan="2" style="color:#03857F;"><i>El banco debe de bajar de...</i> <strong><i>{{$infoSalary->bank_adding_savings}}€</i></strong></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="color:#78a057;"><i>Ahorro mensual total...</i> <strong><i>{{$infoSalary->saveMonthly + ($infoSalary->bank_now_total - $infoSalary->bank_adding_savings)}}€</i></strong></td>
+                </tr>
             @endif
             <tr>
-                <td style="color:#856404;"><i>Ahorro mensual fijo</i> <strong><i>{{$infoSalary->saveMonthly}}€</i></strong></td>
-                <td style="color:#78a057;"><i>Ahorro mensual total</i> <strong><i>{{$infoSalary->saveMonthly + ($infoSalary->bank_now_total - $infoSalary->bank_adding_savings)}}€</i></strong></td>
+                <td colspan="2" style="color:#78a057;">
+                    <i>Ahorro total (actual)...</i> <strong><i>{{$infoSalary->bank_now_total}}€</i></strong><br>
+                    @if(count($salarySubtractedTotal) != 0)
+                        <small style='color:#000;'><strong><i>Las estadisticas y el total ahorrado han cambiado ya que se ha tenido que tocar el ahorro total. Pulsa <a href="{{ route('config') }}">aquí</a> para configurar los pagos realizados.</i></strong><br><hr>Lista de los pagos realizados:</small>
+                        <ul type="square">
+                        @foreach($salarySubtractedTotal as $subTotal)
+                            <li style="color:#000;">{{$subTotal->name}} [ <i><strong>{{$subTotal->amount}}€</strong></i> ]</li>
+                        @endforeach
+                        </ul>
+                    @endif
+                </td>
             </tr>
-            <tr>
-                <td style="color:#448d8b;"><i>Banco mes actual (sin ahorro)</i> <strong><i>{{$infoSalary->bank_previous_month}}€</i></strong></td>
-                <td style="color:#448d8b;"><i>Banco mes actual (sumando ahorro mensual total)</i> <strong><i>{{$infoSalary->bank_now_total}}€</i></strong></td>
-            </tr>
-            <tr>
-                <td style="color:#448d8b;"><i>El banco no debe de bajar de...</i> <strong><i>{{$infoSalary->bank_adding_savings}}€</i></strong></td>
-                <td style="color:#b38c2d;"><i>Este mes puedes gastar...</i> <strong><i>{{round(($infoSalary->bank_now_total - $infoSalary->bank_adding_savings),2)}}€</i></strong></td>
-            </tr>
+            @if(count($salarySubtractedTotal) == 0)
+                <tr>
+                    <td colspan="2" style="color:#b38c2d;"><i>Este mes puedes gastar...</i> <strong><i>{{round(($infoSalary->bank_now_total - $infoSalary->bank_adding_savings),2)}}€</i></strong></td>
+                </tr>
+            @endif
             @endforeach
             </tbody>
         </table>
@@ -124,8 +141,13 @@
     <tbody>
         <tr>
             <td><i><strong>Ahorro mensual</strong></i></td>
-            <td><i><strong>{{$saveMonth}}€</strong></i></td>
-            <td><i><strong>{{getPercent($saveMonth,$totalMonth)}}%</strong></i></td>
+            @if(count($salarySubtractedTotal) == 0)
+                <td><i><strong>{{$saveMonth}}€</strong></i></td>
+                <td><i><strong>{{getPercent($saveMonth,$totalMonth)}}%</strong></i></td>
+            @else 
+                <td><i><strong>{{$saveMonthly}}€</strong></i></td>
+                <td><i><strong>{{getPercent($saveMonthly,$totalMonth)}}%</strong></i></td>
+            @endif
         </tr>
         @foreach($percents as $percent)
             <tr>

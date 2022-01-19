@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\SalarySubtractedTotal;
 use App\Models\FinancialActivity;
 use App\Models\MonthlySavings;
 use Illuminate\Http\Request;
@@ -26,15 +27,17 @@ class HomeController extends Controller
         $percents = FinancialActivity::select("category.name", DB::raw("SUM(value) as total"))->where('salary_id','=',$salary[0]['id'])->where('type','=','expense')->join('category','financial_activity.category_id','=','category.id')->groupBy('category.name')->orderByRaw('total DESC')->get();
         $totalMonth = $salary[0]['money'] + $incomes;
         $saveMonth = $salary[0]['saveMonthly'] + ($salary[0]['bank_now_total'] - $salary[0]['bank_adding_savings']);
+        $saveMonthly = $salary[0]['saveMonthly'];
+        $salarySubtractedTotal = Salary::select('salary_subtracted_total.id AS idSub','salary_subtracted_total.name AS name','salary_subtracted_total.amount AS amount','salary.id AS idSal','salary_bank.bank_now_total AS bank_now_total','salary.month AS month','salary.year AS year')->join('salary_subtracted_total','salary_subtracted_total.salary_id','=','salary.id')->join('salary_bank','salary_bank.salary_id','=','salary.id')->where('salary.passed','=','0')->get();
 
-        return view('home.home',compact('salary','salaries','expenses','incomes','financialActivity','percents','totalMonth','saveMonth'));
+        return view('home.home',compact('salary','salaries','expenses','incomes','financialActivity','percents','totalMonth','saveMonth','saveMonthly','salarySubtractedTotal'));
     }
 
     /**
      * Vista historial
      */
     public function indexHistory(){
-        $salary = Salary::select('*')->join('salary_bank', 'salary.id', '=', 'salary_bank.salary_id')->where('passed','=',1)->orderBy('salary.id', 'desc')->paginate(3);
+        $salary = Salary::select('*')->join('salary_bank', 'salary.id', '=', 'salary_bank.salary_id')->where('passed','=',1)->orderBy('salary.id', 'desc')->paginate(5);
         return view('history.history',compact('salary'));
     }
 
@@ -48,7 +51,8 @@ class HomeController extends Controller
         $incomes = FinancialActivity::where('salary_id','=',$request->id)->where('type','=','income')->sum('value');
         $financialActivity = FinancialActivity::select('financial_activity.type','financial_activity.nameAction','financial_activity.created_at','financial_activity.value','category.name','financial_activity.month','financial_activity.year')->join('category','financial_activity.category_id','=','category.id')->where('salary_id','=',$request->id)->orderBy('financial_activity.created_at', 'asc')->get();
         $percents = FinancialActivity::select("category.name", DB::raw("SUM(value) as total"))->where('salary_id','=',$request->id)->where('type','=','expense')->join('category','financial_activity.category_id','=','category.id')->groupBy('category.name')->orderByRaw('total DESC')->get();
-        
+        $salarySubtractedTotal = Salary::select('salary_subtracted_total.id AS idSub','salary_subtracted_total.name AS name','salary_subtracted_total.amount AS amount','salary.id AS idSal','salary_bank.bank_now_total AS bank_now_total','salary.month AS month','salary.year AS year')->join('salary_subtracted_total','salary_subtracted_total.salary_id','=','salary.id')->join('salary_bank','salary_bank.salary_id','=','salary.id')->where('salary_subtracted_total.salary_id','=',$request->id)->get();
+
         // Pintamos la información de salida. Para ello a iremos almacenando en una variable
         $print = '<div class="card">';
         $print .= '<div class="card-header">';
@@ -74,17 +78,34 @@ class HomeController extends Controller
         $print .= '<table class="table">';
         $print .= '<tbody>';
         foreach($salary as $infoSalary){
+            $saveMonthly = $infoSalary->saveMonthly;
             $saveTotal = $infoSalary->saveMonthly + ($infoSalary->bank_now_total - $infoSalary->bank_adding_savings);
             $totalMonth = $infoSalary->money + $incomes;
 
-            $print .= '<tr><td colspan="2" style="color:#0c5460;"><i>Suma de salarios</i> <strong><i>'.$infoSalary->money.'€</i></strong></td></tr>';
+            $text = '';
             if($incomes > 0){
                 $totalIncomes = $infoSalary->money + $incomes;
-                $print .= '<tr><td colspan="2" style="color:#0c5460;"><i>Suma de salarios (sumando ingresos)</i> <strong><i>'.$totalIncomes.'€</i></strong></td></tr>';
+                $text .= '( '.$totalIncomes.'€ )';
             }
-            $print .= '<tr><td style="color:#856404;"><i>Ahorro mensual fijo</i> <strong><i>'.$infoSalary->saveMonthly.'€</i></strong></td><td style="color:#78a057;"><i>Ahorro mensual total</i> <strong><i>'.$saveTotal.'€</i></strong></td></tr>';
-            $print .= '<tr><td style="color:#448d8b;"><i>Inicio de mes </i> <strong><i>'.$infoSalary->bank_previous_month.'€</i></strong></td><td style="color:#448d8b;"><i>Ahorro mes finalizado (sumando ahorro mensual total)</i> <strong><i>'.$infoSalary->bank_now_total.'€</i></strong></td></tr>';
-            $print .= '<tr><td style="color:#448d8b;"><i>El banco no bajó de...</i> <strong><i>'.$infoSalary->bank_adding_savings.'€</i></strong></td><td style="color:#b38c2d;"><i>Este mes ha sobrado...</i> <strong><i>'.round(($infoSalary->bank_now_total - $infoSalary->bank_adding_savings),2).'€</i></strong></td></tr>';
+            $print .= '<tr><td colspan="2" style="color:#0c5460;"><i>Suma de salarios</i> <strong><i>'.$infoSalary->money.'€</i></strong> <i>'.$text.'</i></td></tr>';
+            $print .= '<tr><td  colspan="2" style="color:#3B0468;"><i>El ahorro inicial del mes empezó en...</i> <strong><i>'.$infoSalary->bank_previous_month.'€</i></strong></td></tr>';
+            $print .= '<tr><td style="color:#03857F;"><i>Ahorro mensual fijo...</i> <strong><i>'.$infoSalary->saveMonthly.'€</i></strong></td></tr>';
+            if(count($salarySubtractedTotal) == 0){
+                $print .= '<tr><td style="color:#03857F;"><i>El banco no debía de bajar de...</i> <strong><i>'.$infoSalary->bank_adding_savings.'€</i></strong></td></td></tr>';
+                $print .= '<tr><td style="color:#78a057;"><i>Se ahorró un total de...</i> <strong><i>'.$saveTotal.'€</i></strong> <i>('.round(($infoSalary->bank_now_total - $infoSalary->bank_adding_savings),2).'€ de ahorro extra)</i></td></tr>';    
+            }
+            $textF = '';
+            if(count($salarySubtractedTotal) != 0){
+                $text = "<br><small style='color:#000;'><strong><i>Las estadisticas y el total ahorrado cambiaron ya que se tuvo que tocar el ahorro total. <br><hr>Lista de los pagos realizados:</i></strong></small>";
+                $lista = '<ul type="square">';
+                foreach ($salarySubtractedTotal as $subTotal) {
+                    $lista .= '<li style="color:#000;">'.$subTotal->name.' [ <i><strong>'.$subTotal->amount.'€</strong></i> ]</li>';
+                }
+                $lista .= '</ul>';
+
+                $textF = $text.$lista;
+            }
+            $print .= '<tr><td style="color:#78a057;"><i>El mes terminó con un ahorro total de...</i> <strong><i>'.$infoSalary->bank_now_total.'€</i></strong>'.$textF.'</td></tr>';
         }
         $print .= '</tbody>';
         $print .= '</table>';
@@ -137,9 +158,15 @@ class HomeController extends Controller
         $print .= '<tbody>';
         // Ahorro mensual. Siempre va fuera del foreach
         $print .= '<tr>';
-        $print .= '<td><i><strong>Ahorro mensual</strong></i></td>';
-        $print .= '<td><i><strong>'.$saveTotal.'€</strong></i></td>';
-        $print .= '<td><i><strong>'.getPercent($saveTotal,$totalMonth).'%</strong></i></td>';
+        if(count($salarySubtractedTotal) == 0){
+            $print .= '<td><i><strong>Ahorro mensual</strong></i></td>';
+            $print .= '<td><i><strong>'.$saveTotal.'€</strong></i></td>';
+            $print .= '<td><i><strong>'.getPercent($saveTotal,$totalMonth).'%</strong></i></td>';
+        } else {
+            $print .= '<td><i><strong>Ahorro mensual</strong></i></td>';
+            $print .= '<td><i><strong>'.$saveMonthly.'€</strong></i></td>';
+            $print .= '<td><i><strong>'.getPercent($saveMonthly,$totalMonth).'%</strong></i></td>';
+        }
         $print .= '</tr>';
         foreach($percents as $percent){
             $print .= '<tr>';

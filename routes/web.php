@@ -54,6 +54,8 @@ Route::post('/reactivateCategory', [App\Http\Controllers\CategoryController::cla
 Route::get('/config', [App\Http\Controllers\ConfigController::class, 'index'])->name('config')->middleware('auth');
 Route::post('/updateConfig', [App\Http\Controllers\ConfigController::class, 'updateConfig'])->name('updateConfig');
 Route::post('/updateSaving', [App\Http\Controllers\ConfigController::class, 'updateSaving'])->name('updateSaving');
+Route::post('/addSubTotal', [App\Http\Controllers\ConfigController::class, 'addSubTotal'])->name('addSubTotal');
+Route::post('/updateSubTotal', [App\Http\Controllers\ConfigController::class, 'updateSubTotal'])->name('updateSubTotal');
 
 /*
 |--------------------------------------------------------------------------
