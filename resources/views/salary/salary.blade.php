@@ -80,7 +80,7 @@
             @foreach ($salaries as $salary)
             <tr>
                 <td class="textLeft">
-                    @if(count($countSalaries) < 2 && comprobateDate($salary->month,$salary->year))
+                    @if(comprobateId($id,$salary->salary_id,$countSalaries))
                         <i class="fas fa-plus addSalaryMonth" data-month="{{ $salary->month }}" data-year="{{ $salary->year }}"></i>
                         <i class="fas fa-minus closeSalaryMonth" style="display:none;"></i>
                     @else

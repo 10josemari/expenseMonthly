@@ -21,7 +21,7 @@ class FinancialActivityController extends Controller
     public function indexIncome(){
         $categories = Category::select('*')->where('deleted_at','=',NULL)->get();
         $salary = Salary::select('*')->where('passed','=',0)->get();
-        $incomes = FinancialActivity::where('type','=','income')->where('salary_id','=',$salary[0]['id'])->orderBy('id', 'desc')->paginate(6);
+        $incomes = FinancialActivity::where('type','=','income')->where('salary_id','=',$salary[0]['id'])->orderBy('id', 'desc')->paginate(numPaginate());
 
         return view('income.income',compact('categories','incomes'));
     }
@@ -110,7 +110,7 @@ class FinancialActivityController extends Controller
     public function indexExpense(){
         $categories = Category::select('*')->where('deleted_at','=',NULL)->get();
         $salary = Salary::select('*')->where('passed','=',0)->get();
-        $expenses = FinancialActivity::where('type','=','expense')->where('salary_id','=',$salary[0]['id'])->orderBy('id', 'desc')->paginate(6);
+        $expenses = FinancialActivity::where('type','=','expense')->where('salary_id','=',$salary[0]['id'])->orderBy('id', 'desc')->paginate(numPaginate());
 
         return view('expenses.expenses',compact('categories','expenses'));
     }

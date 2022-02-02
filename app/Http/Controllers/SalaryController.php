@@ -19,9 +19,15 @@ class SalaryController extends Controller
      * - Con $countSalaries nos permite contar cuantos registros tenemos en el mes actual para así en la vista controlar la visibilidad de añadir más de 2 salarios en un mes.
      */
     public function index(){
-        $salaries = Salary::select('salary.*','salary_bank.*','salary_users.*')->join('salary_users','salary_users.salary_id','=','salary.id')->join('salary_bank','salary_bank.salary_id','=','salary.id')->orderBy('salary.id', 'desc')->paginate(6);
-        $countSalaries = Salary::select('salary.*','salary_bank.*','salary_users.*')->join('salary_users','salary_users.salary_id','=','salary.id')->join('salary_bank','salary_bank.salary_id','=','salary.id')->where('month','=',date('m'))->where('year','=',date('Y'))->get();
-        return view('salary.salary', compact('salaries','countSalaries'));
+        $salary = Salary::where('passed','=','0')->get();
+        $id = $salary[0]['id'];
+        $infoSalary = Salary::select('id')->get();
+        foreach ($infoSalary as $info) {
+            $infoSalaries = Salary::select('*')->join('salary_users','salary_users.salary_id','=','salary.id')->join('salary_bank','salary_bank.salary_id','=','salary.id')->where('salary.id','=',$info->id)->count();
+            $countSalaries [$info->id] = [$infoSalaries];
+        }
+        $salaries = Salary::select('salary.*','salary_bank.*','salary_users.*')->join('salary_users','salary_users.salary_id','=','salary.id')->join('salary_bank','salary_bank.salary_id','=','salary.id')->orderBy('salary.id', 'desc')->paginate(numPaginate());
+        return view('salary.salary', compact('id','salaries','countSalaries'));
     }
 
     /**
@@ -205,6 +211,12 @@ class SalaryController extends Controller
             SalaryBank::find($salaryUsers[0]['salaryBank_id'])->delete();
             // Eliminamos el salario
             Salary::find($salaryUsers[0]['salary_id'])->delete();
+            // Marcamos el salario del mes anterior como passed a 0 para seguir actuando sobre ese mes.
+            $getDate = explode("-",getRestMonth(date('m')));
+            $salaryPassed = Salary::select('salary.id','salary_bank.bank_now_total')->join('salary_users','salary_users.salary_id','=','salary.id')->join('salary_bank','salary_bank.salary_id','=','salary.id')->where('salary.month','=',$getDate[0])->where('salary.year','=',$getDate[1])->get();
+            if(count($salaryPassed) > 0){
+                Salary::find($salaryPassed[0]['id'])->update(['passed' => 0], ['updated_at' => Carbon::now()]);
+            }
         } else {
             $newMoney = $salary[0]['money'] - $salaryUsers[0]['amount'];
             $bank_now_total = $salaryUsers[0]['bank_new_total'] - $salaryUsers[0]['amount'];

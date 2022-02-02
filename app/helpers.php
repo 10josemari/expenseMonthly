@@ -8,7 +8,22 @@ function setActive($routeName){
 }
 
 /**
- * Comprobamos si la el mes-año recibido es igual al actual
+ * Función para devolver ceros al principio
+ */
+function zero_fill ($valor, $long = 0)
+{
+    return str_pad($valor, $long, '0', STR_PAD_LEFT);
+}
+
+/**
+ * Devuelve el número de paginación. Por defecto devuelve 12 pero se puede configurar otro número desde el .env
+ */
+function numPaginate(){
+    return "12";
+}
+
+/**
+ * Comprobamos si la el mes-año recibido es igual al actual (posibilidad de borrar)
  */
 function comprobateDate($month,$year){
     $actually = date('m').date('Y');
@@ -119,43 +134,43 @@ function getRestMonth($month){
             return $month."-".$year;
         break;
         case '02':
-            return ($month-1)."-".date('Y');
+            return zero_fill(($month-1),2)."-".date('Y');
         break;
         case '03':
-            return ($month-1)."-".date('Y');
+            return zero_fill(($month-1),2)."-".date('Y');
         break;
         case '04':
-            return ($month-1)."-".date('Y');
+            return zero_fill(($month-1),2)."-".date('Y');
         break;
         case '05':
-            return ($month-1)."-".date('Y');
+            return zero_fill(($month-1),2)."-".date('Y');
         break;
         case '06':
-            return ($month-1)."-".date('Y');
+            return zero_fill(($month-1),2)."-".date('Y');
         break;
         case '07':
-            return ($month-1)."-".date('Y');
+            return zero_fill(($month-1),2)."-".date('Y');
         break;
         case '08':
-            return ($month-1)."-".date('Y');
+            return zero_fill(($month-1),2)."-".date('Y');
         break;
         case '09':
-            return ($month-1)."-".date('Y');
+            return zero_fill(($month-1),2)."-".date('Y');
         break;
         case '10':
-            return ($month-1)."-".date('Y');
+            return zero_fill(($month-1),2)."-".date('Y');
         break;
         case '11':
-            return ($month-1)."-".date('Y');
+            return zero_fill(($month-1),2)."-".date('Y');
         break;
         case '12':
-            return ($month-1)."-".date('Y');
+            return zero_fill(($month-1),2)."-".date('Y');
         break;
     }
 }
 
 /**
- * Retornamos el mes-año posterior al pasado. Lo devolvemos en formato 12-2021
+ * Retornamos el mes-año posterior al pasado. Lo devolvemos en formato 12-2021 (posibilidad de borrar)
  */
 function getNextMonth($month){
     switch ($month) {
@@ -237,4 +252,16 @@ function getDateFormat($date){
  */
 function getPercent($value,$total){
     return round(($value * 100) / $total,2);
+}
+
+/**
+ * Comprobamos si los ids de los salarios son iguales
+ */
+function comprobateId($idFixed,$idChange,$countSalaries){
+    if($idFixed == $idChange && $countSalaries[$idChange][0] < 2){
+        return true;
+    } else{
+        return false;
+    }
+
 }

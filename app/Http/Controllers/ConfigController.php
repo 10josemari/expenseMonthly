@@ -20,7 +20,7 @@ class ConfigController extends Controller
      */
     public function index(){
         $configs = Config::select('*')->get();
-        $salaries = Salary::select('*')->orderBy('id', 'desc')->get();
+        $salaries = Salary::select('*')->orderBy('id', 'desc')->paginate(numPaginate());
         $saveTotal = Salary::sum('saveMonthly');
         $infoSalary = SalaryBank::select('*')->orderBy('id', 'desc')->get();
         foreach($infoSalary as $info){

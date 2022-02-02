@@ -37,7 +37,7 @@ class HomeController extends Controller
      * Vista historial
      */
     public function indexHistory(){
-        $salary = Salary::select('*')->join('salary_bank', 'salary.id', '=', 'salary_bank.salary_id')->where('passed','=',1)->orderBy('salary.id', 'desc')->paginate(5);
+        $salary = Salary::select('*')->join('salary_bank', 'salary.id', '=', 'salary_bank.salary_id')->where('passed','=',1)->orderBy('salary.id', 'desc')->paginate(6);
         return view('history.history',compact('salary'));
     }
 

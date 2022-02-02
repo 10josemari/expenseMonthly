@@ -157,3 +157,18 @@ $(".btn-login").on('click', function(e) {
 $(".nav-btn").on('click', function(e) {
     $(".col-body").addClass("disabledBody");
 });
+
+/**
+ * Vista config
+ */
+ $(".fa-compress-config").on('click', function(e) {
+    $('.carBodyConfig').css('display','block');
+    $(".fa-compress-arrows-alt-config").css('display','block');
+    $(".fa-compress-config").css('display','none');
+});
+
+$(".fa-compress-arrows-alt-config").on('click', function(e) {
+    $('.carBodyConfig').css('display','none');
+    $(".fa-compress-arrows-alt-config").css('display','none');
+    $(".fa-compress-config").css('display','block');
+});

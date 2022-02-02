@@ -8,8 +8,12 @@
 <div class="card marginTop">
     <div class="card-header">
         <div class="floatLeft primary">Retirada</div> 
+        <div class="floatRight primary">
+            <i class="fas fa-compress fa-compress-config"></i>
+            <i class="fas fa-compress-arrows-alt fa-compress-arrows-alt-config" style="display:none;"></i>
+        </div>
     </div>
-    <div class="card-body">
+    <div class="card-body carBodyConfig none">
         <div>
             <table class="table">
                 <thead>
@@ -109,7 +113,7 @@
     <div class="card-header">
         <div class="floatLeft primary">Ahorro mensual (permite modificar el mes actual)</div> 
     </div>
-    <div class="card-body cardBodyConfig">
+    <div class="card-body">
         <div>
             <table class="table">
                 <thead>
@@ -140,6 +144,11 @@
                     </tr>
                 @endif
                 </tbody>
+                @if (count($salaries) > 0)
+                <tfoot>
+                  <tr><td colspan="3">{{ $salaries->links() }}</td></tr>
+                </tfoot>
+                @endif
             </table>
         </div>
     </div>
