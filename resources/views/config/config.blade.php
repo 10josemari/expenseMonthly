@@ -9,11 +9,11 @@
     <div class="card-header">
         <div class="floatLeft primary">Retirada</div> 
         <div class="floatRight primary">
-            <i class="fas fa-compress fa-compress-config"></i>
-            <i class="fas fa-compress-arrows-alt fa-compress-arrows-alt-config" style="display:none;"></i>
+            <i class="fas fa-compress fa-compress-config" style="display:none;"></i>
+            <i class="fas fa-compress-arrows-alt fa-compress-arrows-alt-config"></i>
         </div>
     </div>
-    <div class="card-body carBodyConfig none">
+    <div class="card-body carBodyConfig">
         <div>
             <table class="table">
                 <thead>
@@ -97,10 +97,10 @@
             @endforeach
         @endif
         @if ($saveTotal != 0)
-        <tr>
+        <!--<tr>
             <td><strong><i>Ahorro total</i></strong></td>
             <td><strong><i>{{ $saveTotal }}€</i></strong></td>
-        </tr>
+        </tr>-->
         @endif
         </tbody>
     </table>

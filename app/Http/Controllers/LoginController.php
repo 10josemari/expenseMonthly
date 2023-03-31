@@ -36,12 +36,13 @@ class LoginController extends Controller
             'username' => ['required', 'string'],
             'password' => ['required', 'string']
         ]);
-    
+
         $remember = request()->filled('remember');
         if(Auth::attempt($credentials,$remember)){
             request()->session()->regenerateToken();
             return redirect()->intended('home'); // Esto hace llamada a la ruta home del web.php
         }
+        dd("AAA_");
 
         // Si el login es erróneo, lanzamos una exception
         throw ValidationException::withMessages([

@@ -9,6 +9,7 @@ use App\Models\FinancialActivity;
 use App\Models\MonthlySavings;
 use Illuminate\Http\Request;
 use App\Models\SalaryUsers;
+use App\Models\Category;
 use App\Models\Salary;
 use App\Models\Config;
 use Carbon\Carbon;
@@ -23,7 +24,7 @@ class HomeController extends Controller
         $salaries = SalaryUsers::select('*')->where('salary_id','=',$salary[0]['id'])->get();
         $expenses = FinancialActivity::where('salary_id','=',$salary[0]['id'])->where('type','=','expense')->sum('value');
         $incomes = FinancialActivity::where('salary_id','=',$salary[0]['id'])->where('type','=','income')->sum('value');
-        $financialActivity = FinancialActivity::select('financial_activity.type','financial_activity.nameAction','financial_activity.created_at','financial_activity.value','category.name')->join('category','financial_activity.category_id','=','category.id')->where('salary_id','=',$salary[0]['id'])->orderBy('financial_activity.created_at', 'asc')->get();
+        $financialActivity = FinancialActivity::select('financial_activity.type','financial_activity.nameAction','financial_activity.created_at','financial_activity.value','category.name')->join('category','financial_activity.category_id','=','category.id')->where('salary_id','=',$salary[0]['id'])->orderBy('financial_activity.created_at', 'desc')->get();
         $percents = FinancialActivity::select("category.name", DB::raw("SUM(value) as total"))->where('salary_id','=',$salary[0]['id'])->where('type','=','expense')->join('category','financial_activity.category_id','=','category.id')->groupBy('category.name')->orderByRaw('total DESC')->get();
         $totalMonth = $salary[0]['money'] + $incomes;
         $saveMonth = $salary[0]['saveMonthly'] + ($salary[0]['bank_now_total'] - $salary[0]['bank_adding_savings']);
@@ -49,7 +50,7 @@ class HomeController extends Controller
         $salaries = SalaryUsers::select('*')->where('salary_id','=',$request->id)->get();
         $expenses = FinancialActivity::where('salary_id','=',$request->id)->where('type','=','expense')->sum('value');
         $incomes = FinancialActivity::where('salary_id','=',$request->id)->where('type','=','income')->sum('value');
-        $financialActivity = FinancialActivity::select('financial_activity.type','financial_activity.nameAction','financial_activity.created_at','financial_activity.value','category.name','financial_activity.month','financial_activity.year')->join('category','financial_activity.category_id','=','category.id')->where('salary_id','=',$request->id)->orderBy('financial_activity.created_at', 'asc')->get();
+        $financialActivity = FinancialActivity::select('financial_activity.type','financial_activity.nameAction','financial_activity.created_at','financial_activity.value','category.name','financial_activity.month','financial_activity.year')->join('category','financial_activity.category_id','=','category.id')->where('salary_id','=',$request->id)->orderBy('financial_activity.created_at', 'desc')->get();
         $percents = FinancialActivity::select("category.name", DB::raw("SUM(value) as total"))->where('salary_id','=',$request->id)->where('type','=','expense')->join('category','financial_activity.category_id','=','category.id')->groupBy('category.name')->orderByRaw('total DESC')->get();
         $salarySubtractedTotal = Salary::select('salary_subtracted_total.id AS idSub','salary_subtracted_total.name AS name','salary_subtracted_total.amount AS amount','salary.id AS idSal','salary_bank.bank_now_total AS bank_now_total','salary.month AS month','salary.year AS year')->join('salary_subtracted_total','salary_subtracted_total.salary_id','=','salary.id')->join('salary_bank','salary_bank.salary_id','=','salary.id')->where('salary_subtracted_total.salary_id','=',$request->id)->get();
 
@@ -187,23 +188,118 @@ class HomeController extends Controller
     */
     public function indexSearch(){
         // return view('home.home',compact('salary','salaries','expenses','incomes','financialActivity','percents','totalMonth','saveMonth'));
-        return view('search.search');
+        //$categories = Category::select('*')->where('deleted_at','=',NULL)->orderBy('name', 'asc')->get();
+        $categories = Category::select('*')->orderBy('name', 'asc')->get();
+        return view('search.search',compact('categories'));
     }
 
     /**
     * Buscador con filtro
     */
     public function searchFilter(Request $request){
-        $financialActivity = FinancialActivity::select('financial_activity.type','financial_activity.nameAction','financial_activity.created_at','financial_activity.value','category.name','financial_activity.month','financial_activity.year')->join('category','financial_activity.category_id','=','category.id')->where('nameAction','like','%'.$request->value.'%')->where('type','=',"expense")->orderBy('financial_activity.created_at', 'asc')->get();
-        $total = 0;
+        // Tratamos el string obtenido para separarlo según el input metido
+        $data = explode("&",$request->value);
+        foreach($data as $key => $value){
+            $dataValue = explode("=",$value);
+            switch($dataValue[0]){
+		        case 'value':
+                    $valueSQL = empty($dataValue[1]) ? false : $dataValue[1];        
+                break;
+		        case 'year':
+		        	$yearSQL = empty($dataValue[1]) ? false : $dataValue[1];
+		        break;
+		        case 'category':
+		        	$categorySQL = empty($dataValue[1]) ? false : $dataValue[1];
+		        break;
+                case 'month':
+		        	$monthSQL = empty($dataValue[1]) ? false : $dataValue[1];
+                    if(strlen($monthSQL) == 1){
+                        $monthSQL = str_pad($monthSQL, 2, "0", STR_PAD_LEFT);
+                    }
+		        break;
+	        }
+        }
 
-        // Pintamos la información de salida. Para ello a iremos almacenando en una variable
-        $print = '<div class="card">';
+        // Query que trae toda la info según los parámetros dados.
+        if($valueSQL != "" OR $monthSQL != "" OR $yearSQL != "" OR $categorySQL != ""){
+            $financialActivity = FinancialActivity::query();
+            $financialActivity = $financialActivity->select('financial_activity.type','financial_activity.nameAction','financial_activity.created_at','financial_activity.value','category.name','financial_activity.month','financial_activity.year');
+            $financialActivity = $financialActivity->join('category','financial_activity.category_id','=','category.id');
+            if($valueSQL != ""){
+                $financialActivity = $financialActivity->where('nameAction','like','%'.$valueSQL.'%');
+            } 
+            if($monthSQL != ""){
+                $financialActivity = $financialActivity->where('month','=',$monthSQL);
+            }
+            if($yearSQL != ""){
+                $financialActivity = $financialActivity->where('year','=',$yearSQL);
+            }
+            if($categorySQL != ""){
+                $financialActivity = $financialActivity->where('category_id','=',$categorySQL);
+            }
+            $financialActivity = $financialActivity->orderBy('financial_activity.id', 'desc');
+            //$financialActivity = $financialActivity->dd();
+            $financialActivity = $financialActivity->get();
+        } else {
+            // Retornamos vacío si no hay datos
+            return "";
+        }
+
+        // Obtenemos los totales de ingresos/gastos según los datos dados
+        $totalIncome = 0;
+        $totalExpense = 0;
+        foreach($financialActivity as $financialActivityTotal){
+            switch($financialActivityTotal->type){
+                case 'income':
+                    $totalIncome += $financialActivityTotal->value;
+                break;
+                case 'expense':
+                    $totalExpense += $financialActivityTotal->value;
+                break;
+            }
+        }
+
+        $print = '<div class="row marginTop">';
+        // Apartado de ingresos totales
+        $print .= '<div class="col-6">';
+        $print .= '<div class="card">';
+        $print .= '<div class="card-header" style="background-color:#155724;color:#fff;">';
+        $print .= '<div class="floatLeft"><strong>Total ingresos</strong></div>';
+        $print .= '</div>';
+        $print .= '</div>';
+        $print .= '<div class="card-body bodyTotalIncome">';
+        if($totalIncome > 0){
+            $print .= '<p>Hay un total de <b>'.round($totalIncome,2).'€</b> en ingresos.</p>';
+        } else {
+            $print .= '<p>No hay <b>ingresos</b> con los parámetros dados.</p>';
+        }
+        $print .= '</div>';
+        $print .= '</div>';
+
+        // Apartado de gastos totales
+        $print .= '<div class="col-6">';
+        $print .= '<div class="card">';
+        $print .= '<div class="card-header" style="background-color:#721c24;color:#fff;">';
+        $print .= '<div class="floatLeft"><strong>Total gastos</strong></div>';
+        $print .= '</div>';
+        $print .= '</div>';
+        $print .= '<div class="card-body">';
+        if($totalExpense > 0){
+            $print .= '<p>Hay un total de <b>'.round($totalExpense,2).'€</b> en gastos.</p>';
+        } else {
+            $print .= '<p>No hay <b>gastos</b> con los parámetros dados.</p>';
+        }
+        $print .= '</div>';
+        $print .= '</div>';
+
+        $print .= '</div>';
+
+        // Apartado de gastos detallados
+        $print .= '<div class="card marginTop">';
         $print .= '<div class="card-header">';
-        $print .= '<div class="floatLeft"><strong>Gastos Filtrados</strong></div>';
+        $print .= '<div class="floatLeft"><strong>Gastos detallados</strong></div>';
         $print .= '</div>';
         $print .= '</div>';
-
         $print .= '<div class="card-body">';
 
         //GASTOS FILTRADOS
@@ -229,22 +325,9 @@ class HomeController extends Controller
                     $print .= '</tr>';
                 break;
             }
-            // Vamos sumando el total
-            $total = round($total + $financial->value,2);
         }
-
-        if($total != 0){
-            $print .= '<tr>';
-            $print .= '<td colspan="2"><i><strong>Total</strong></i></td>';
-            $print .= '<td><i><strong>'.$total.'€</strong></i></td>';
-            $print .= '</tr>';
-        }
-
-        $print .= '</tbody>';
-        $print .= '</table>';
 
         $print .= '</div>';
         return $print;
-
     }
 }

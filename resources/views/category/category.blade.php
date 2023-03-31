@@ -64,11 +64,6 @@
             </tr>
         @endif
         </tbody>
-        @if (count($categories) > 0)
-        <tfoot>
-          <tr><td colspan="3">{{ $categories->links() }}</td></tr>
-        </tfoot>
-        @endif
     </table>
 </div>
 <!-- listado que muestra las categorías creadas -->
@@ -103,9 +98,9 @@
             </tr>
         @endif
         </tbody>
-        @if (count($categoriesNull) > 0)
+        @if (count($categories) > 0)
         <tfoot>
-          <tr><td colspan="3">{{ $categoriesNull->links() }}</td></tr>
+          <tr><td colspan="3">{{ $categories->links() }}</td></tr>
         </tfoot>
         @endif
     </table>

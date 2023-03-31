@@ -72,7 +72,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle colorTextPrimary" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">{{auth()->user()->username}}</a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                              <a class="dropdown-item {{ setActive('config') }} nav-btn colorTextPrimary" href="{{ route('config') }}"><i class="fas fa-cog"></i> Configuración</a>
+                              <!--<a class="dropdown-item {{ setActive('config') }} nav-btn colorTextPrimary" href="{{ route('config') }}"><i class="fas fa-cog"></i> Configuración</a>-->
                               <!--<a class="dropdown-item {{ setActive('category') }}" href="{{ route('category') }}"><i class="fab fa-cuttlefish"></i> Categorías</a>-->
                               <a class="dropdown-item {{ setActive('piggyBank') }} nav-btn colorTextPrimary" href="{{ route('piggyBank') }}"><i class="fas fa-piggy-bank"></i> Hucha</a>
                               <div class="dropdown-divider"></div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\SalarySubtractedTotal;
 use App\Models\FinancialActivity;
 use App\Models\SalaryBank;
 use App\Models\Category;
@@ -19,11 +20,12 @@ class FinancialActivityController extends Controller
      * Tambien pasamos para poder pintar los ingresos a editar del mes actual
      */
     public function indexIncome(){
-        $categories = Category::select('*')->where('deleted_at','=',NULL)->get();
+        $categories = Category::select('*')->where('deleted_at','=',NULL)->orderBy('name','asc')->get();
         $salary = Salary::select('*')->where('passed','=',0)->get();
         $incomes = FinancialActivity::where('type','=','income')->where('salary_id','=',$salary[0]['id'])->orderBy('id', 'desc')->paginate(numPaginate());
+        $salaryBank = Salary::select('*')->join('salary_bank', 'salary.id', '=', 'salary_bank.salary_id')->where('passed','=',0)->get();
 
-        return view('income.income',compact('categories','incomes'));
+        return view('income.income',compact('categories','incomes','salaryBank'));
     }
 
     /**
@@ -108,11 +110,12 @@ class FinancialActivityController extends Controller
      * Tambien pasamos para poder pintar los ingresos a editar del mes actual
      */
     public function indexExpense(){
-        $categories = Category::select('*')->where('deleted_at','=',NULL)->get();
+        $categories = Category::select('*')->where('deleted_at','=',NULL)->orderBy('name','asc')->get();
         $salary = Salary::select('*')->where('passed','=',0)->get();
         $expenses = FinancialActivity::where('type','=','expense')->where('salary_id','=',$salary[0]['id'])->orderBy('id', 'desc')->paginate(numPaginate());
-
-        return view('expenses.expenses',compact('categories','expenses'));
+        $salaryBank = Salary::select('*')->join('salary_bank', 'salary.id', '=', 'salary_bank.salary_id')->where('passed','=',0)->get();
+        
+        return view('expenses.expenses',compact('categories','expenses','salaryBank'));
     }
 
     /**

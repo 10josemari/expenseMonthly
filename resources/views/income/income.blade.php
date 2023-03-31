@@ -3,6 +3,16 @@
 @section('title','Transferencias/Ingresos')
 
 @section('body')
+<!-- Div donde se muestra el saldo actual pendiente -->
+<div class="alert alert-secondary marginTop" role="alert">
+    @foreach($salaryBank as $infoSalary) 
+        <i>Actualmente tienes en el banco un total de... </i> <strong><i>{{round(($infoSalary->bank_now_total - $infoSalary->bank_adding_savings),2)}}€</i></strong>
+    @endforeach
+</div>
+<!-- Div donde se muestra el saldo actual pendiente -->
+
+<hr>
+
 <!-- panel de transferencias/ingresos -->
 <div class="card marginTop">
     <div class="card-header colorSecondary">

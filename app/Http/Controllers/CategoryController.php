@@ -16,8 +16,8 @@ class CategoryController extends Controller
      * $categoriesNull muestra todas las categorias inactivas.
      */
     public function index(){
-        $categories = Category::select('*')->where('deleted_at','=',NULL)->paginate(5);
-        $categoriesNull = Category::select('*')->where('deleted_at','!=',NULL)->paginate(5);
+        $categories = Category::select('*')->where('deleted_at','=',NULL)->orderBy('name','asc')->paginate(numPaginate());
+        $categoriesNull = Category::select('*')->where('deleted_at','!=',NULL)->paginate(numPaginate());
         return view('category.category', compact('categories','categoriesNull'));
     }
 

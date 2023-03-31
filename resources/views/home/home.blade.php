@@ -42,7 +42,7 @@
             </tr>
             @if(count($salarySubtractedTotal) == 0)
                 <tr>
-                    <td colspan="2" style="color:#03857F;"><i>El banco debe de bajar de...</i> <strong><i>{{$infoSalary->bank_adding_savings}}€</i></strong></td>
+                    <td colspan="2" style="color:#03857F;"><i>El banco no debe de bajar de...</i> <strong><i>{{$infoSalary->bank_adding_savings}}€</i></strong></td>
                 </tr>
                 <tr>
                     <td colspan="2" style="color:#78a057;"><i>Ahorro mensual total...</i> <strong><i>{{$infoSalary->saveMonthly + ($infoSalary->bank_now_total - $infoSalary->bank_adding_savings)}}€</i></strong></td>
