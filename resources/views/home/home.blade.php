@@ -117,27 +117,25 @@
             <th><strong>Importe</strong></th>
         </tr>
     </thead>
+    <tbody>
     @if(count($financialData) > 0)
-        @foreach($financialData as $per)
+        @foreach($financialData as $data)
         <tr>
-            <td><strong>{{ $per['type'] }}</strong></td>
+            <td><strong>{{ $data['type'] }}</strong></td>
             <td style="color:#721c24;">
-                <strong>{{$per['expense']}}€ (<i style="color:#000;">{{ getPercentByType('expense',$expenses,$incomes,$per['expense'],$per['income']) }}</i>)</strong>
+                <strong>{{$data['expense']}}€ (<i style="color:#000;">{{ getPercentByType('expense',$expenses,$incomes,$data['expense'],$data['income']) }}</i>)</strong>
             </td>
             <td style="color:#155724;">
-            <strong>{{$per['income']}}€ (<i style="color:#000;">{{ getPercentByType('income',$expenses,$incomes,$per['expense'],$per['income']) }}</i>)</strong>
+            <strong>{{$data['income']}}€ (<i style="color:#000;">{{ getPercentByType('income',$expenses,$incomes,$data['expense'],$data['income']) }}</i>)</strong>
             </td>
-            @if( $per['expense'] > $per['income'] )
-                <td style="color:#721c24;"><strong>{{ $per['expense'] - $per['income'] }}€</strong></td>
-            @elseif ($per['expense'] < $per['income'])
-                <td style="color:#155724;"><strong>{{ $per['income'] - $per['expense'] }}€</strong></td>
-            @else 
-                <td><strong>0€</strong></td>
+            @if( $data['expense'] > $data['income'] )
+                <td style="color:#721c24;"><strong>{{ $data['expense'] - $data['income'] }}€</strong></td>
+            @elseif ($data['expense'] < $data['income'])
+                <td style="color:#155724;"><strong>{{ $data['income'] - $data['expense'] }}€</strong></td>
             @endif
         </tr>
         @endforeach
     @endif
-    <tbody>
     </tbody>
 </table>
 <!-- gastos/ingresos por categoría -->

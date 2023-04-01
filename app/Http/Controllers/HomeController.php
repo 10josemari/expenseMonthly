@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Models\SalarySubtractedTotal;
 use App\Models\FinancialActivity;
 use App\Models\MonthlySavings;
 use Illuminate\Http\Request;
@@ -51,12 +50,11 @@ class HomeController extends Controller
         $percents = FinancialActivity::select("category.name", DB::raw("SUM(value) as total"))->where('salary_id','=',$request->id)->where('type','=','expense')->join('category','financial_activity.category_id','=','category.id')->groupBy('category.name')->orderByRaw('total DESC')->get();
         $financialData = FinancialActivity::select("category.name","financial_activity.type",DB::raw("SUM(value) as total"))->where('salary_id','=',$request->id)->join('category','financial_activity.category_id','=','category.id')->groupBy('category.name','financial_activity.type')->orderByRaw('total DESC')->get();
         $financialData = convertData($financialData);
-        $salarySubtractedTotal = Salary::select('salary_subtracted_total.id AS idSub','salary_subtracted_total.name AS name','salary_subtracted_total.amount AS amount','salary.id AS idSal','salary_bank.bank_now_total AS bank_now_total','salary.month AS month','salary.year AS year')->join('salary_subtracted_total','salary_subtracted_total.salary_id','=','salary.id')->join('salary_bank','salary_bank.salary_id','=','salary.id')->where('salary_subtracted_total.salary_id','=',$request->id)->get();
 
         // Pintamos la información de salida. Para ello a iremos almacenando en una variable
         $print = '<div class="card">';
         $print .= '<div class="card-header">';
-        $print .= '<div class="floatLeft">Resumen de gastos <strong><i>'.getMonth($financialActivity[0]['month']).' - '.$financialActivity[0]['year'].' / '.getNextMonthTitle($financialActivity[0]['month']).'</i></strong></div>';
+        $print .= '<div class="floatLeft">Resumen de gastos <strong><i></div>';
         $print .= '</div>';
         $print .= '</div>';
 

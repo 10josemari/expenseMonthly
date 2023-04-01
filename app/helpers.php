@@ -253,16 +253,20 @@ function getDateFormat($date){
  * Obtenemos el % de gasto
  */
 function getPercentByType($type,$expensesTotal,$incomesTotal,$expenseCategory,$incomeCategory){
-    // En caso de no tener que hacer nada.. retornamos 0 siempre.
-    $total = 0;
-    $totalCategory = 0;
-
     switch ($type) {
         case 'expense':
-            return round(($expenseCategory * 100) / $expensesTotal,2)."%";
+            if($expensesTotal != 0){
+                return round(($expenseCategory * 100) / $expensesTotal,2)."%";
+            } else {
+                return "0%";
+            }
         break;
         case 'income':
-            return round(($incomeCategory * 100) / $incomesTotal,2)."%";
+            if($incomesTotal != 0){
+                return round(($incomeCategory * 100) / $incomesTotal,2)."%";
+            } else {
+                return "0%";
+            }
         break;
     }
 }
