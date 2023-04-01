@@ -25,13 +25,10 @@ class HomeController extends Controller
         $expenses = FinancialActivity::where('salary_id','=',$salary[0]['id'])->where('type','=','expense')->sum('value');
         $incomes = FinancialActivity::where('salary_id','=',$salary[0]['id'])->where('type','=','income')->sum('value');
         $financialActivity = FinancialActivity::select('financial_activity.type','financial_activity.nameAction','financial_activity.created_at','financial_activity.value','category.name')->join('category','financial_activity.category_id','=','category.id')->where('salary_id','=',$salary[0]['id'])->orderBy('financial_activity.created_at', 'desc')->get();
-        $percents = FinancialActivity::select("category.name", DB::raw("SUM(value) as total"))->where('salary_id','=',$salary[0]['id'])->where('type','=','expense')->join('category','financial_activity.category_id','=','category.id')->groupBy('category.name')->orderByRaw('total DESC')->get();
-        $totalMonth = $salary[0]['money'] + $incomes;
-        $saveMonth = $salary[0]['saveMonthly'] + ($salary[0]['bank_now_total'] - $salary[0]['bank_adding_savings']);
-        $saveMonthly = $salary[0]['saveMonthly'];
-        $salarySubtractedTotal = Salary::select('salary_subtracted_total.id AS idSub','salary_subtracted_total.name AS name','salary_subtracted_total.amount AS amount','salary.id AS idSal','salary_bank.bank_now_total AS bank_now_total','salary.month AS month','salary.year AS year')->join('salary_subtracted_total','salary_subtracted_total.salary_id','=','salary.id')->join('salary_bank','salary_bank.salary_id','=','salary.id')->where('salary.passed','=','0')->get();
+        $financialData = FinancialActivity::select("category.name","financial_activity.type",DB::raw("SUM(value) as total"))->where('salary_id','=',$salary[0]['id'])->join('category','financial_activity.category_id','=','category.id')->groupBy('category.name','financial_activity.type')->orderByRaw('total DESC')->get();
+        $financialData = convertData($financialData);
 
-        return view('home.home',compact('salary','salaries','expenses','incomes','financialActivity','percents','totalMonth','saveMonth','saveMonthly','salarySubtractedTotal'));
+        return view('home.home',compact('salary','salaries','expenses','incomes','financialActivity','financialData'));
     }
 
     /**
@@ -187,8 +184,6 @@ class HomeController extends Controller
     * Buscador
     */
     public function indexSearch(){
-        // return view('home.home',compact('salary','salaries','expenses','incomes','financialActivity','percents','totalMonth','saveMonth'));
-        //$categories = Category::select('*')->where('deleted_at','=',NULL)->orderBy('name', 'asc')->get();
         $categories = Category::select('*')->orderBy('name', 'asc')->get();
         return view('search.search',compact('categories'));
     }

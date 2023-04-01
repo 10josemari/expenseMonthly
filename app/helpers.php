@@ -1,5 +1,7 @@
 <?php 
 
+use Illuminate\Support\Collection;
+
 /**
  * Nos manda el active al elemento de menú del navbar
  */
@@ -255,6 +257,24 @@ function getPercent($value,$total){
 }
 
 /**
+ * Obtenemos el % de gasto
+ */
+function getPercentByType($type,$expensesTotal,$incomesTotal,$expenseCategory,$incomeCategory){
+    // En caso de no tener que hacer nada.. retornamos 0 siempre.
+    $total = 0;
+    $totalCategory = 0;
+
+    switch ($type) {
+        case 'expense':
+            return round(($expenseCategory * 100) / $expensesTotal,2)."%";
+        break;
+        case 'income':
+            return round(($incomeCategory * 100) / $incomesTotal,2)."%";
+        break;
+    }
+}
+
+/**
  * Comprobamos si los ids de los salarios son iguales
  */
 function comprobateId($idFixed,$idChange,$countSalaries){
@@ -264,4 +284,32 @@ function comprobateId($idFixed,$idChange,$countSalaries){
         return false;
     }
 
+}
+
+/**
+ * Transformar los datos de porcentajes
+ */
+function convertData($data){
+    $dataArray = [];
+    foreach ($data as $key => $value) {
+        $dataArray[$value->name][$value->type] = $value->total;
+    }
+    return convertToCollect($dataArray);
+}
+
+/**
+ * Convertimos el array en una colección para poder tratarlo en la vista
+ */
+function convertToCollect($data){
+    foreach ($data as $key => $value) {
+        $expense = empty($value['expense']) ? '0.00' : $value['expense'];
+        $income = empty($value['income']) ? '0.00' : $value['income'];
+
+        $collect[] = [
+            "type" => $key,
+            "income" => $income,
+            "expense" => $expense
+        ];
+    }
+    return collect($collect);
 }
