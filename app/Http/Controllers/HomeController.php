@@ -49,6 +49,8 @@ class HomeController extends Controller
         $incomes = FinancialActivity::where('salary_id','=',$request->id)->where('type','=','income')->sum('value');
         $financialActivity = FinancialActivity::select('financial_activity.type','financial_activity.nameAction','financial_activity.created_at','financial_activity.value','category.name','financial_activity.month','financial_activity.year')->join('category','financial_activity.category_id','=','category.id')->where('salary_id','=',$request->id)->orderBy('financial_activity.created_at', 'desc')->get();
         $percents = FinancialActivity::select("category.name", DB::raw("SUM(value) as total"))->where('salary_id','=',$request->id)->where('type','=','expense')->join('category','financial_activity.category_id','=','category.id')->groupBy('category.name')->orderByRaw('total DESC')->get();
+        $financialData = FinancialActivity::select("category.name","financial_activity.type",DB::raw("SUM(value) as total"))->where('salary_id','=',$request->id)->join('category','financial_activity.category_id','=','category.id')->groupBy('category.name','financial_activity.type')->orderByRaw('total DESC')->get();
+        $financialData = convertData($financialData);
         $salarySubtractedTotal = Salary::select('salary_subtracted_total.id AS idSub','salary_subtracted_total.name AS name','salary_subtracted_total.amount AS amount','salary.id AS idSal','salary_bank.bank_now_total AS bank_now_total','salary.month AS month','salary.year AS year')->join('salary_subtracted_total','salary_subtracted_total.salary_id','=','salary.id')->join('salary_bank','salary_bank.salary_id','=','salary.id')->where('salary_subtracted_total.salary_id','=',$request->id)->get();
 
         // Pintamos la información de salida. Para ello a iremos almacenando en una variable
@@ -76,34 +78,8 @@ class HomeController extends Controller
         $print .= '<table class="table">';
         $print .= '<tbody>';
         foreach($salary as $infoSalary){
-            $saveMonthly = $infoSalary->saveMonthly;
-            $saveTotal = $infoSalary->saveMonthly + ($infoSalary->bank_now_total - $infoSalary->bank_adding_savings);
-            $totalMonth = $infoSalary->money + $incomes;
-
-            $text = '';
-            if($incomes > 0){
-                $totalIncomes = $infoSalary->money + $incomes;
-                $text .= '( '.$totalIncomes.'€ )';
-            }
-            $print .= '<tr><td colspan="2" style="color:#0c5460;"><i>Suma de salarios</i> <strong><i>'.$infoSalary->money.'€</i></strong> <i>'.$text.'</i></td></tr>';
-            $print .= '<tr><td  colspan="2" style="color:#3B0468;"><i>El ahorro inicial del mes empezó en...</i> <strong><i>'.$infoSalary->bank_previous_month.'€</i></strong></td></tr>';
-            $print .= '<tr><td style="color:#03857F;"><i>Ahorro mensual fijo...</i> <strong><i>'.$infoSalary->saveMonthly.'€</i></strong></td></tr>';
-            if(count($salarySubtractedTotal) == 0){
-                $print .= '<tr><td style="color:#03857F;"><i>El banco no debía de bajar de...</i> <strong><i>'.$infoSalary->bank_adding_savings.'€</i></strong></td></td></tr>';
-                $print .= '<tr><td style="color:#78a057;"><i>Se ahorró un total de...</i> <strong><i>'.$saveTotal.'€</i></strong> <i>('.round(($infoSalary->bank_now_total - $infoSalary->bank_adding_savings),2).'€ de ahorro extra)</i></td></tr>';    
-            }
             $textF = '';
-            if(count($salarySubtractedTotal) != 0){
-                $text = "<br><small style='color:#000;'><strong><i>Las estadisticas y el total ahorrado cambiaron ya que se tuvo que tocar el ahorro total. <br><hr>Lista de los pagos realizados:</i></strong></small>";
-                $lista = '<ul type="square">';
-                foreach ($salarySubtractedTotal as $subTotal) {
-                    $lista .= '<li style="color:#000;">'.$subTotal->name.' [ <i><strong>'.$subTotal->amount.'€</strong></i> ]</li>';
-                }
-                $lista .= '</ul>';
-
-                $textF = $text.$lista;
-            }
-            $print .= '<tr><td style="color:#78a057;"><i>El mes terminó con un ahorro total de...</i> <strong><i>'.$infoSalary->bank_now_total.'€</i></strong>'.$textF.'</td></tr>';
+            $print .= '<tr><td style="color:#78a057;"><i>El mes terminó con un saldo de...</i> <strong><i>'.$infoSalary->bank_now_total.'€</i></strong>'.$textF.'</td></tr>';
         }
         $print .= '</tbody>';
         $print .= '</table>';
@@ -147,30 +123,24 @@ class HomeController extends Controller
 
         $print .= '<hr>';
 
-        // PORCENTAJES
+        // Ingresos/Gastos por categoría
         $print .= '<table class="table">';
         $print .= '<thead>';
-        $print .= '<tr><th colspan="3"><strong>Porcentajes de gastos</strong></th></tr>';
-        $print .= '<tr><th><strong>#</strong></th><th><strong>total</strong></th><th><strong>% individual</strong></th></tr>';
+        $print .= '<tr><th colspan="4"><strong>Ingresos/Gastos por categoría</strong></th></tr>';
+        $print .= '<tr><th><strong>#</strong></th><th><strong>Gastos</strong></th><th><strong>Ingresos</strong></th><th><strong>Importe</strong></th></tr>';
         $print .= '</thead>';
         $print .= '<tbody>';
-        // Ahorro mensual. Siempre va fuera del foreach
         $print .= '<tr>';
-        if(count($salarySubtractedTotal) == 0){
-            $print .= '<td><i><strong>Ahorro mensual</strong></i></td>';
-            $print .= '<td><i><strong>'.$saveTotal.'€</strong></i></td>';
-            $print .= '<td><i><strong>'.getPercent($saveTotal,$totalMonth).'%</strong></i></td>';
-        } else {
-            $print .= '<td><i><strong>Ahorro mensual</strong></i></td>';
-            $print .= '<td><i><strong>'.$saveMonthly.'€</strong></i></td>';
-            $print .= '<td><i><strong>'.getPercent($saveMonthly,$totalMonth).'%</strong></i></td>';
-        }
-        $print .= '</tr>';
-        foreach($percents as $percent){
+        foreach($financialData as $data){
             $print .= '<tr>';
-            $print .= '<td><i><strong>'.$percent->name.'</strong></i></td>';
-            $print .= '<td><i><strong>'.$percent->total.'€</strong></i></td>';
-            $print .= '<td><i><strong>'.getPercent($percent->total,$totalMonth).'%</strong></i></td>';
+            $print .= '<td><i><strong>'.$data['type'].'</strong></i></td>';
+            $print .= '<td style="color:#721c24;"><strong>'.$data['expense'].'€ (<i style="color:#000;">'.getPercentByType('expense',$expenses, $incomes,$data['expense'],$data['income']).'</i>)</strong></td>';
+            $print .= '<td style="color:#155724;"><strong>'.$data['income'].'€ (<i style="color:#000;">'.getPercentByType('income',$expenses, $incomes,$data['expense'],$data['income']).'</i>)</strong></td>';
+            if($data['expense'] > $data['income']){
+                $print .= '<td style="color:#721c24;"><strong>'.$data['expense']- $data['income'].'€</strong></td>';
+            } elseif ($data['expense'] < $data['income']) {
+                $print .= '<td style="color:#155724;"><strong>'.$data['income']- $data['expense'].'€</strong></td>';
+            }
             $print .= '</tr>';
         }
         $print .= '</tbody>';

@@ -108,7 +108,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th colspan="5"><strong>Ingresos/Gastos por categoría</strong></th>
+            <th colspan="4"><strong>Ingresos/Gastos por categoría</strong></th>
         </tr>
         <tr>
             <th><strong>#</strong></th>

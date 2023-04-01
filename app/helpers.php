@@ -250,13 +250,6 @@ function getDateFormat($date){
 }
 
 /**
- * Obtenemos el % respecto a un total
- */
-function getPercent($value,$total){
-    return round(($value * 100) / $total,2);
-}
-
-/**
  * Obtenemos el % de gasto
  */
 function getPercentByType($type,$expensesTotal,$incomesTotal,$expenseCategory,$incomeCategory){
